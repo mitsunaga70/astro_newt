@@ -1,0 +1,63 @@
+---
+import { siteMeta } from "../libs/constants";
+const { siteTitle, siteDesc, siteUrl } = siteMeta;
+
+import faviconImg from "../img/common/favicon.png";
+import ogpImg from "〇〇.jp/img/common/ogp.gif";
+import appleImg from "../img/common/apple-touch-icon.png";
+
+export interface Props {
+  pageTitle?: string;
+  pageDesc?: string;
+  pageNoindex?: boolean;
+  faviconImg?: {
+    src: string;
+  };
+  ogpImg?: {
+    src: string;
+  };
+  appleImg?: {
+    src: string;
+  };
+}
+
+const pageTitle = Astro.props?.pageTitle
+  ? `${Astro.props.pageTitle}｜${siteTitle}`
+  : siteTitle;
+
+const pageDesc = Astro.props?.pageDesc ?? siteDesc;
+
+const faviconSrc = new URL("/img/favicon.png", siteUrl);
+const ogpImageURL = new URL("/img/ogp.gif", siteUrl);
+const appleSrc = new URL("/img/apple-touch-icon.png", siteUrl);
+
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const metaRobots = Astro.props?.pageNoindex;
+---
+
+<meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0,minimum-scale=1.0"
+/>
+<meta name="format-detection" content="telephone=no" />
+<meta name="generator" content={Astro.generator} />
+<title>{pageTitle}</title>
+<meta content={pageDesc} name="description" />
+<link rel="icon" href={faviconSrc} />
+<link rel="apple-touch-icon" href={appleSrc} sizes="180x180" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDesc} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogpImageURL} />
+<link rel="canonical" href={canonicalURL} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={canonicalURL} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDesc} />
+<meta name="twitter:image" content={ogpImageURL} />
+{metaRobots && <meta name="robots" content="noindex, follow" />}
+
+<!-- sitemap -->
+<link rel="sitemap" href="/sitemap-index.xml" />

@@ -1,0 +1,32 @@
+---
+import { navItems } from "../libs/nav";
+---
+
+<header class="header js-header">
+  <div class="inner">
+    <nav>
+      <ul>
+        {
+          navItems.map((item) => (
+            <li class="item">
+              <a href={item.link} class="link">
+                {item.text}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+<script src="../assets/script/header.ts"></script>
+<style lang="scss">
+  nav {
+    padding: 30px 30px;
+  }
+  ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+  }
+</style>

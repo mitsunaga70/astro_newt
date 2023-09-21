@@ -1,0 +1,38 @@
+---
+import Container from "../components/Container.astro";
+import Layout from "../layouts/Layout.astro";
+
+import { newtClient } from "../libs/newt";
+import type { Article } from "../libs/newt";
+
+const { items: articles } = await newtClient.getContents<Article>({
+  appUid: "blog",
+  modelUid: "article",
+  query: {
+    select: ["title", "slug", "body"],
+  },
+});
+---
+
+<Layout>
+  <Container>
+    <h2>ヘッドレスCMS検証</h2>
+    <ul>
+      {
+        articles.map((article) => {
+          return (
+            <li>
+              <a href={`/articles/${article.slug}`}>{article.title}</a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </Container>
+</Layout>
+<style lang="scss">
+  p {
+    @include bp(sp) {
+    }
+  }
+</style>

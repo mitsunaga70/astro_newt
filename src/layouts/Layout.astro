@@ -1,0 +1,29 @@
+---
+import "../assets/styles/globals.scss";
+import Meta from "../components/Meta.astro";
+import Loading from "../components/Loading.astro";
+import { ViewTransitions } from "astro:transitions";
+import Wrapper from "../components/Wrapper.astro";
+export interface Props {
+  pageTitle?: string;
+  pageDesc?: string;
+  pageNoindex?: boolean;
+  pageClass?: string;
+}
+
+const { pageTitle, pageDesc, pageNoindex, pageClass = "" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <Meta pageTitle={pageTitle} pageDesc={pageDesc} pageNoindex={pageNoindex} />
+    <ViewTransitions />
+  </head>
+  <body class={pageClass}>
+    <Loading />
+    <Wrapper>
+      <slot />
+    </Wrapper>
+  </body>
+</html>
