@@ -3,10 +3,12 @@ export interface Props {
   text?: string;
   link?: string;
 }
+
 const { text, link } = Astro.props;
+const targetLink = link || "/";
 ---
 
-<a href={link} class="button">{text}</a>
+<a href={targetLink} class="button">{text}</a>
 
 <style lang="scss">
   .button {
