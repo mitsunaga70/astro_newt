@@ -6,9 +6,12 @@ import type { Article } from "../libs/newt";
 export interface Props {
   tags?: string;
   classNames?: string;
+  limit?: string;
 }
-const { tags, classNames } = Astro.props;
+const { tags, limit, classNames } = Astro.props;
 const tagId = tags && tags;
+
+const limitNumber = limit || "100";
 
 const { items: articles } = await newtClient.getContents<Article>({
   appUid: "blog",
@@ -16,6 +19,7 @@ const { items: articles } = await newtClient.getContents<Article>({
   query: {
     select: ["_id", "title", "slug", "body", "coverImage"],
     tags: tagId,
+    limit: limit,
   },
 });
 ---

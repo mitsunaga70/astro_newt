@@ -1,20 +1,27 @@
 ---
 import Container from "../components/Container.astro";
 import Layout from "../layouts/Layout.astro";
-
+import { Image } from "astro:assets";
 import TagList from "../components/TagList.astro";
 import CateList from "../components/CateList.astro";
 import Archive from "../components/ArchiveList.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import NewsList from "../components/NewsList.astro";
+import Button from "../components/Button.astro";
+import aboutImage from "../assets/img/about.jpg";
 ---
 
 <Layout>
   <Container>
+    <!-- <section class="u-mb80">
+      <Image src={aboutImage} alt="" width={aboutImage.width} height={aboutImage.height} />
+      <SectionTitle ja="私について" />
+      <Button text="ABOUT" />
+    </section> -->
     <section class="u-mb80">
       <SectionTitle ja="BLOG" />
       <TagList />
-      <Archive />
+      <Archive limit="3" />
     </section>
     <section>
       <SectionTitle ja="NEWS" />
