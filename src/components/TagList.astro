@@ -1,0 +1,53 @@
+---
+import { newtClient, type Tag } from "../libs/newt";
+const { items: tags } = await newtClient.getContents<Tag>({
+  appUid: "blog",
+  modelUid: "tag",
+  query: {
+    select: ["name", "slug"],
+    order: ["-_priority", "-_sys.customOrder"],
+  },
+});
+---
+
+<div class="u-mb40">
+  <div class="tag u-mb16">
+    <ul class="list">
+      <li class="item">
+        <a href="/" class="link"> すべて</a>
+      </li>
+      {
+        tags.map((tag) => {
+          return (
+            <li class="item">
+              <a href={`/articles/tag/${tag.slug}`} class="link">
+                {tag.name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  .tag {
+    display: flex;
+    gap: 30px;
+    white-space: nowrap;
+
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 16px;
+      row-gap: 8px;
+      .item {
+      }
+      .link {
+        @include hoverLine($text-color, true);
+      }
+    }
+  }
+</style>

@@ -2,6 +2,10 @@
 
 import { createClient } from "newt-client-js";
 
+export interface Tag {
+  slug: string;
+  name: string;
+}
 export interface Article {
   _id: string;
   title: string;

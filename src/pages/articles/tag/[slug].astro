@@ -1,0 +1,35 @@
+---
+import Container from "../../../components/Container.astro";
+import Layout from "../../../layouts/Layout.astro";
+import TagList from "../../../components/TagList.astro";
+import Works from "../../../components/archive.astro";
+import { pageInfo } from "../../../libs/constants";
+import { newtClient } from "../../../libs/newt";
+import type { Tag } from "../../../libs/newt";
+import { Image } from "astro:assets";
+import Archive from "../../../components/archive.astro";
+export const getStaticPaths = async () => {
+  const { items: tags } = await newtClient.getContents<WorksCate>({
+    appUid: "blog",
+    modelUid: "tag",
+    query: {
+      select: ["_id", "slug", "name"],
+    },
+  });
+
+  return tags.map((tag) => ({
+    params: { slug: tag.slug },
+    props: { tag },
+  }));
+};
+
+const { tag } = Astro.props;
+const tagId = tag._id;
+---
+
+<Layout>
+  <Container>
+    <TagList />
+    <Archive tags={tagId} classNames="-col3" />
+  </Container>
+</Layout>

@@ -1,49 +1,20 @@
 ---
 import Container from "../components/Container.astro";
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
-import { newtClient } from "../libs/newt";
-import type { Article } from "../libs/newt";
 
-const { items: articles } = await newtClient.getContents<Article>({
-  appUid: "blog",
-  modelUid: "article",
-  query: {
-    select: ["_id", "title", "slug", "body", "coverImage"],
-  },
-});
+import TagList from "../components/TagList.astro";
+import Archive from "../components/Archive.astro";
 ---
 
 <Layout>
   <Container>
     <h2>ヘッドレスCMS検証</h2>
 
-    <ul class="list">
-      {
-        articles.map((article) => {
-          return (
-            <li>
-              <a href={`/articles/${article.slug}`}>
-                <figure transition:name={article.slug}>
-                  <Image
-                    src={article.coverImage.src}
-                    width={article.coverImage.width}
-                    height={article.coverImage.height}
-                    alt={article.title}
-                  />
-                </figure>
-                <div class="body">
-                  <h3>{article.title}</h3>
-                  <p class="more">詳細を見る</p>
-                </div>
-              </a>
-            </li>
-          );
-        })
-      }
-    </ul>
+    <TagList />
+    <Archive />
   </Container>
 </Layout>
+
 <style lang="scss">
   .dummy {
     max-width: 100px;
@@ -51,61 +22,5 @@ const { items: articles } = await newtClient.getContents<Article>({
   h2 {
     font-size: 3rem;
     margin-bottom: 2em;
-  }
-  .list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    row-gap: 30px;
-    &::before,
-    &::after {
-      content: "";
-      display: block;
-      width: 31.5%;
-      order: 1;
-    }
-    li {
-      flex-basis: 31.5%;
-      &:not(:nth-last-of-type(-n + 3)) {
-      }
-    }
-    a {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    figure {
-      @include vw(h, 230);
-      max-height: 230px;
-      border: 1px solid #ddd;
-      img {
-        width: 100%;
-        display: block;
-        height: 100%;
-        object-fit: cover;
-        object-position: bottom;
-      }
-    }
-    h3 {
-      font-size: 2.2rem;
-      margin-top: 1em;
-      line-height: 1.5;
-    }
-    .more {
-      background-color: $text-color;
-      color: $white;
-      width: 100%;
-      text-align: center;
-      padding: 0.5em 1.5em;
-      margin-inline: auto;
-      margin-top: 1em;
-      font-size: 1.8rem;
-    }
-    .body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-    }
   }
 </style>
