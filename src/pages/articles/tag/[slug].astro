@@ -2,11 +2,8 @@
 import Container from "../../../components/Container.astro";
 import Layout from "../../../layouts/Layout.astro";
 import TagList from "../../../components/TagList.astro";
-import Works from "../../../components/archive.astro";
-import { pageInfo } from "../../../libs/constants";
 import { newtClient } from "../../../libs/newt";
 import type { Tag } from "../../../libs/newt";
-import { Image } from "astro:assets";
 import Archive from "../../../components/archive.astro";
 export const getStaticPaths = async () => {
   const { items: tags } = await newtClient.getContents<Tag>({
