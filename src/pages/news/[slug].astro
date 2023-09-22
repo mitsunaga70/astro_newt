@@ -6,35 +6,28 @@ import Container from "../../components/Container.astro";
 import Button from "../../components/Button.astro";
 import { Image } from "astro:assets";
 export const getStaticPaths = async () => {
-  const { items: articles } = await newtClient.getContents<Article>({
-    appUid: "blog",
+  const { items: news } = await newtClient.getContents<Article>({
+    appUid: "news",
     modelUid: "article",
     query: {
-      select: ["_id", "title", "slug", "body", "coverImage"],
+      select: ["_id", "title", "slug", "body"],
     },
   });
-  return articles.map((article) => ({
-    params: { slug: article.slug },
-    props: { article },
+  return news.map((newsItem) => ({
+    params: { slug: newsItem.slug },
+    props: { newsItem },
   }));
 };
 
-const { article } = Astro.props;
+const { newsItem } = Astro.props;
 ---
 
 <Layout>
   <Container value="small">
     <div class="blog-single">
-      <h1>{article.title}</h1>
-      <figure transition:name={article.slug} class="cover">
-        <Image
-          src={article.coverImage.src}
-          width={article.coverImage.width}
-          height={article.coverImage.height}
-          alt={article.title}
-        />
-      </figure>
-      <article set:html={article.body} />
+      <h1>{newsItem.title}</h1>
+
+      <article set:html={newsItem.body} />
       <Button text="トップへ" link="/" />
     </div>
   </Container>

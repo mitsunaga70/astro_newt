@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import { newtClient } from "../libs/newt";
+import type { Article } from "../libs/newt";
+import FormatDate from "./formatDate.astro";
+
+export interface Props {
+  categories?: string;
+  classNames?: string;
+}
+const { categories, classNames } = Astro.props;
+const cateId = categories && categories;
+
+const { items: news } = await newtClient.getContents<Article>({
+  appUid: "news",
+  modelUid: "article",
+  query: {
+    select: ["_id", "_sys", "title", "slug", "body"],
+    categories: cateId,
+  },
+});
+---
+
+<ul class="list">
+  {
+    news.map((newsItem) => {
+      return (
+        <li>
+          <a href={`/news/${newsItem.slug}`}>
+            <FormatDate date={newsItem._sys.raw.createdAt} />
+            <h3>{newsItem.title}</h3>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style lang="scss">
+  .list {
+    li {
+      border-bottom: 1px solid;
+      &:first-of-type {
+        a {
+          padding-top: 0;
+        }
+      }
+    }
+    a {
+      display: flex;
+      align-items: center;
+      padding: 1em 0;
+      gap: 30px;
+    }
+
+    h3 {
+      font-size: 2rem;
+      line-height: 1.5;
+    }
+  }
+</style>

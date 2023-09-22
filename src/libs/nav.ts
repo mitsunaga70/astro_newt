@@ -9,4 +9,9 @@ export const navItems = [
 
     link: "/articles/",
   },
+  {
+    text: "NEWS",
+
+    link: "/news/",
+  },
 ];

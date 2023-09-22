@@ -1,0 +1,35 @@
+---
+import Container from "../../../components/Container.astro";
+import Layout from "../../../layouts/Layout.astro";
+import CateList from "../../../components/CateList.astro";
+import { newtClient } from "../../../libs/newt";
+import type { Tag } from "../../../libs/newt";
+import Archive from "../../../components/ArchiveList.astro";
+import SectionTitle from "../../../components/SectionTitle.astro";
+import NewsList from "../../../components/NewsList.astro";
+export const getStaticPaths = async () => {
+  const { items: categories } = await newtClient.getContents<Tag>({
+    appUid: "news",
+    modelUid: "category",
+    query: {
+      select: ["_id", "slug", "name"],
+    },
+  });
+
+  return categories.map((cate) => ({
+    params: { slug: cate.slug },
+    props: { cate },
+  }));
+};
+
+const { cate } = Astro.props;
+const cateId = cate._id;
+---
+
+<Layout>
+  <Container>
+    <SectionTitle ja={cate.name} />
+    <CateList />
+    <NewsList categories={cateId} classNames="-col3" />
+  </Container>
+</Layout>

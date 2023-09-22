@@ -8,6 +8,7 @@ export interface Tag {
 }
 export interface Article {
   _id: string;
+  _sys: string;
   title: string;
   slug: string;
   body: string;

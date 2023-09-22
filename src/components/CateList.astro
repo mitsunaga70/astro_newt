@@ -1,0 +1,53 @@
+---
+import { newtClient, type Tag } from "../libs/newt";
+const { items: categories } = await newtClient.getContents<Tag>({
+  appUid: "news",
+  modelUid: "category",
+  query: {
+    select: ["name", "slug"],
+    order: ["-_priority", "-_sys.customOrder"],
+  },
+});
+---
+
+<div class="u-mb40">
+  <div class="tag u-mb16">
+    <ul class="list">
+      <li class="item">
+        <a href="/news/" class="link"> すべて</a>
+      </li>
+      {
+        categories.map((cate) => {
+          return (
+            <li class="item">
+              <a href={`/news/cate/${cate.slug}`} class="link">
+                {cate.name}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  .tag {
+    display: flex;
+    gap: 30px;
+    white-space: nowrap;
+
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 16px;
+      row-gap: 8px;
+      .item {
+      }
+      .link {
+        @include hoverLine($text-color, true);
+      }
+    }
+  }
+</style>

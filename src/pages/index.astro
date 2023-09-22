@@ -3,13 +3,23 @@ import Container from "../components/Container.astro";
 import Layout from "../layouts/Layout.astro";
 
 import TagList from "../components/TagList.astro";
+import CateList from "../components/CateList.astro";
 import Archive from "../components/ArchiveList.astro";
 import SectionTitle from "../components/SectionTitle.astro";
+import NewsList from "../components/NewsList.astro";
 ---
 
 <Layout>
   <Container>
-    <TagList />
-    <Archive />
+    <section class="u-mb80">
+      <SectionTitle ja="BLOG" />
+      <TagList />
+      <Archive />
+    </section>
+    <section>
+      <SectionTitle ja="NEWS" />
+      <CateList />
+      <NewsList />
+    </section>
   </Container>
 </Layout>
