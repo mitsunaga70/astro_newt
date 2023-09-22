@@ -5,7 +5,8 @@ export const navItems = [
     link: "/",
   },
   {
-    text: "CONTACT",
-    link: "/contact/",
+    text: "BLOG",
+
+    link: "/articles/",
   },
 ];

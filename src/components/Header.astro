@@ -1,9 +1,11 @@
 ---
 import { navItems } from "../libs/nav";
+import Button from "./Button.astro";
 ---
 
 <header class="header js-header">
   <div class="inner">
+    <p class="logo">ヘッドレスCMS検証</p>
     <nav>
       <ul>
         {
@@ -17,16 +19,37 @@ import { navItems } from "../libs/nav";
         }
       </ul>
     </nav>
+    <a href="/contact/" class="contact">CONTACT</a>
   </div>
 </header>
 <script src="../assets/script/header.ts"></script>
 <style lang="scss">
-  nav {
+  .contact {
+    background-color: $text-color;
+    width: fit-content;
+    display: block;
+    color: white;
+    padding: 1em 2em;
+    border-radius: 30px;
+    line-height: 1;
+  }
+  header {
     padding: 30px 30px;
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
+    width: 100%;
+  }
+  .logo {
+    font-size: 2.4rem;
+  }
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav {
   }
   ul {
     display: flex;

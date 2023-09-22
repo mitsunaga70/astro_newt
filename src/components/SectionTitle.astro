@@ -1,0 +1,19 @@
+---
+export interface Type {
+  ja: string;
+  reversal: boolean;
+}
+const { ja, reversal } = Astro.props;
+const sectionTitleClass = reversal ? "sectionTitle reversal" : "sectionTitle";
+---
+
+<div class={sectionTitleClass}>
+  <h2 class="ja">{ja}</h2>
+</div>
+
+<style>
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 2em;
+  }
+</style>

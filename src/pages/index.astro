@@ -4,23 +4,12 @@ import Layout from "../layouts/Layout.astro";
 
 import TagList from "../components/TagList.astro";
 import Archive from "../components/ArchiveList.astro";
+import SectionTitle from "../components/SectionTitle.astro";
 ---
 
 <Layout>
   <Container>
-    <h2>ヘッドレスCMS検証</h2>
-
     <TagList />
     <Archive />
   </Container>
 </Layout>
-
-<style lang="scss">
-  .dummy {
-    max-width: 100px;
-  }
-  h2 {
-    font-size: 3rem;
-    margin-bottom: 2em;
-  }
-</style>
