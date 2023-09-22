@@ -23,10 +23,15 @@ import { navItems } from "../libs/nav";
 <style lang="scss">
   nav {
     padding: 30px 30px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
   }
   ul {
     display: flex;
     justify-content: flex-end;
     gap: 30px;
+    font-size: 1.8rem;
   }
 </style>

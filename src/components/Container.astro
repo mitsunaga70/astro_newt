@@ -13,8 +13,8 @@ const size = Astro.props.value || "middle";
   $width: (
     full: 1440,
     large: 1360,
-    middle: 1070,
-    small: 1080,
+    middle: 1080,
+    small: 980,
     xsmall: 820,
   );
   .container {
@@ -23,7 +23,7 @@ const size = Astro.props.value || "middle";
   @each $name, $value in $width {
     .#{$name} {
       @include bp(pc) {
-        @include vw(maxW, $value);
+        max-width: $value + px;
         @include vw(w, $value);
         margin: auto;
       }

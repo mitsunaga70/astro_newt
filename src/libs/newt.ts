@@ -3,9 +3,15 @@
 import { createClient } from "newt-client-js";
 
 export interface Article {
+  _id: string;
   title: string;
   slug: string;
   body: string;
+  coverImage: {
+    src: string;
+    width: number;
+    height: number;
+  };
 }
 
 export const newtClient = createClient({

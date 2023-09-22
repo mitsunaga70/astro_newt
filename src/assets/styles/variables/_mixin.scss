@@ -247,7 +247,7 @@
     font-weight: $weight-b;
     letter-spacing: 0em;
     line-height: 1.6;
-    @include max(fz, 16);
+    font-size: 1.6rem;
     @if $siz== "" and $siz == main {
       line-height: 1.6;
     } @else if $siz == main_bold {
@@ -456,34 +456,20 @@ $propertys: (
 
 @mixin clamp($pro, $base, $wid: "") {
   $valuePC: unquote(
-    "clamp(" + calc($base * 0.8) + "px," + calc($base / $pc-w * 100) + "vw," +
-      ($base * 1.2) + "px)"
+    "clamp(" + calc($base * 0.8) + "px," + calc($base / $pc-w * 100) + "vw," + ($base * 1.2) + "px)"
   );
   $valueSP: unquote(
-    "clamp(" + calc($base * 0.8) + "px," + calc($base / $sp-w * 100) + "vw," +
-      ($base * 1.2) + "px)"
+    "clamp(" + calc($base * 0.8) + "px," + calc($base / $sp-w * 100) + "vw," + ($base * 1.2) + "px)"
   );
 
   @each $name, $property in $propertys {
     @if #{$property} == fz {
       @if $base <= 12 {
         $valuePC: unquote(
-          "clamp(" +
-            $base +
-            "px," +
-            calc($base / $pc-w * 100) +
-            "vw," +
-            ($base * 1.2) +
-            "px)"
+          "clamp(" + $base + "px," + calc($base / $pc-w * 100) + "vw," + ($base * 1.2) + "px)"
         );
         $valueSP: unquote(
-          "clamp(" +
-            $base +
-            "px," +
-            calc($base / $sp-w * 100) +
-            "vw," +
-            ($base * 1.2) +
-            "px)"
+          "clamp(" + $base + "px," + calc($base / $sp-w * 100) + "vw," + ($base * 1.2) + "px)"
         );
       }
     }
@@ -510,22 +496,14 @@ $propertys: (
   }
 }
 @mixin max($pro, $base, $wid: "") {
-  $valuePC: unquote(
-    "max(" + calc($base / $pc-w) * 100 + "vw," + calc($base * 0.73) + "px)"
-  );
-  $valueSP: unquote(
-    "max(" + calc($base / $sp-w * 100) + "vw," + calc($base * 0.73) + "px)"
-  );
+  $valuePC: unquote("max(" + calc($base / $pc-w) * 100 + "vw," + calc($base * 0.73) + "px)");
+  $valueSP: unquote("max(" + calc($base / $sp-w * 100) + "vw," + calc($base * 0.73) + "px)");
 
   @each $name, $property in $propertys {
     @if #{$property} == fz {
       @if $base <= 12 {
-        $valuePC: unquote(
-          "max(" + calc($base / $pc-w * 100) + "vw," + $base + "px)"
-        );
-        $valueSP: unquote(
-          "max(" + calc($base / $sp-w * 100) + "vw," + $base + "px)"
-        );
+        $valuePC: unquote("max(" + calc($base / $pc-w * 100) + "vw," + $base + "px)");
+        $valueSP: unquote("max(" + calc($base / $sp-w * 100) + "vw," + $base + "px)");
       }
     }
     @if $pro == $name {
