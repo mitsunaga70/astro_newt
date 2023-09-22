@@ -9,7 +9,7 @@ import type { Tag } from "../../../libs/newt";
 import { Image } from "astro:assets";
 import Archive from "../../../components/archive.astro";
 export const getStaticPaths = async () => {
-  const { items: tags } = await newtClient.getContents<WorksCate>({
+  const { items: tags } = await newtClient.getContents<Tag>({
     appUid: "blog",
     modelUid: "tag",
     query: {
@@ -29,7 +29,18 @@ const tagId = tag._id;
 
 <Layout>
   <Container>
+    <h2>{tag.name}</h2>
     <TagList />
     <Archive tags={tagId} classNames="-col3" />
   </Container>
 </Layout>
+
+<style lang="scss">
+  .dummy {
+    max-width: 100px;
+  }
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 2em;
+  }
+</style>
