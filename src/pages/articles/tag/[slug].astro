@@ -4,7 +4,7 @@ import Layout from "../../../layouts/Layout.astro";
 import TagList from "../../../components/TagList.astro";
 import { newtClient } from "../../../libs/newt";
 import type { Tag } from "../../../libs/newt";
-import Archive from "../../../components/archive.astro";
+import Archive from "../../../components/ArchiveList.astro";
 export const getStaticPaths = async () => {
   const { items: tags } = await newtClient.getContents<Tag>({
     appUid: "blog",
