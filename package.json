@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.2.8",
     "astro": "^3.1.1",
     "jquery": "^3.7.1",
+    "js-base64": "^3.7.5",
     "newt-client-js": "^3.2.6",
     "postcss-merge-queries": "^1.0.3",
     "react": "^18.2.0",

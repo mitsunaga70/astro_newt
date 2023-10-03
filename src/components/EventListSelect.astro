@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { newtClient } from "../libs/newt";
 import type { Article } from "../libs/newt";
 import FormatDate from "./formatDate.astro";
+import Button from "./Button.astro";
 
 export interface Props {
   tags?: string;
@@ -60,15 +61,20 @@ const { items: events } = await newtClient.getContents<Article>({
 </ul>
 
 <div class="bar">
-  <a href="/404" data-astro-reload>まとめて予約する</a>
   <p class="js-tourEventReset">すべてをリセット</p>
-  <p class="more">詳細を見る</p>
-  <span class="js-tourEventCount"></span>
-  <span class="js-tourEventTotal"></span>
+
+  <a href="/404" data-astro-reload class="button">まとめて予約する</a>
+
+  <p class="text">
+    <span class="js-tourEventCount">0</span>
+    <span>/</span>
+    <span class="js-tourEventTotal"></span>
+  </p>
 </div>
 
 <script>
   import $ from "jquery";
+  import { Base64 } from "js-base64";
   $(function () {
     const $checkbox = $(".js-tourEventInput");
     const $checkboxNum = $checkbox.length;
@@ -96,29 +102,37 @@ const { items: events } = await newtClient.getContents<Article>({
   });
 
   $(function () {
-  const $checkbox = $(".js-tourEventInput");
+    const $checkbox = $(".js-tourEventInput");
 
-  $checkbox.on("change", function () {
-    const $checked = $(".js-tourEventInput:checked");
-    const selectedValues = $checked
-      .map(function () {
-        const selectedValue = $(this).attr("value");
-        return selectedValue;
-      })
-      .get();
+    $checkbox.on("change", function () {
+      const $checked = $(".js-tourEventInput:checked");
+      const selectedValues = $checked
+        .map(function () {
+          const selectedValue = $(this).attr("value");
+          return selectedValue;
+        })
+        .get();
 
-    if (selectedValues.length === 0) {
-      const reservationLink = $(".bar a");
-      reservationLink.attr("href", `/404`);
-    } else {
-      const selectedValuesString = selectedValues.join(",");
-      const encryptedValuesString = window.btoa(unescape(encodeURIComponent(selectedValuesString)));
-      const reservationLink = $(".bar a");
-      reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
-    }
+      if (selectedValues.length === 0) {
+        const reservationLink = $(".bar a");
+        reservationLink.attr("href", `/404`);
+      } else {
+        const selectedValuesString = selectedValues.join(",");
+
+        console.log(selectedValuesString);
+        (function () {
+          var aaa = Base64.encode(selectedValuesString);
+          console.log(aaa);
+          var bbb = Base64.decode(aaa);
+          console.log(bbb);
+        })();
+        const encryptedValuesString = Base64.encode(selectedValuesString);
+
+        const reservationLink = $(".bar a");
+        reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
+      }
+    });
   });
-});
-
 </script>
 <style lang="scss">
   .list {
@@ -153,5 +167,31 @@ const { items: events } = await newtClient.getContents<Article>({
         margin-bottom: 8px;
       }
     }
+  }
+
+  .bar {
+    position: fixed;
+    bottom: 0;
+    background-color: #e9edf7;
+    width: 100%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 30px;
+  }
+  .button {
+    background-color: $text-color;
+    width: fit-content;
+
+    display: block;
+    color: white;
+    padding: 1em 3em;
+    border-radius: 40px;
+  }
+  .text {
+    font-size: 2.8rem;
+    letter-spacing: 0.1em;
   }
 </style>
