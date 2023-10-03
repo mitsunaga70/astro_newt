@@ -6,7 +6,7 @@ import type { Article } from "../libs/newt";
 export interface Props {
   tags?: string;
   classNames?: string;
-  limit?: string;
+  limit?: number;
 }
 const { tags, limit, classNames } = Astro.props;
 const tagId = tags && tags;

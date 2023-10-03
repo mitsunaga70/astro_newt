@@ -1,0 +1,157 @@
+---
+import { Image } from "astro:assets";
+import { newtClient } from "../libs/newt";
+import type { Article } from "../libs/newt";
+import FormatDate from "./formatDate.astro";
+
+export interface Props {
+  tags?: string;
+  classNames?: string;
+  limit?: number;
+}
+const { tags, limit, classNames } = Astro.props;
+const tagId = tags && tags;
+
+const { items: events } = await newtClient.getContents<Article>({
+  appUid: "event",
+  modelUid: "article",
+  query: {
+    select: ["_id", "_sys", "title", "slug", "body", "coverImage"],
+    tags: tagId,
+    limit: limit,
+  },
+});
+---
+
+<ul class="list">
+  {
+    events.map((eventsItem) => {
+      return (
+        <li>
+          <div class="heading">
+            <input
+              type="checkbox"
+              name={eventsItem._id}
+              id={eventsItem._id}
+              class="js-tourEventInput"
+              value={eventsItem.title}
+            />
+            <label for={eventsItem._id}>
+              <p>選択する</p>
+            </label>
+          </div>
+          <div class="inner">
+            <figure transition:name={eventsItem.slug}>
+              <Image
+                src={eventsItem.coverImage.src}
+                width={eventsItem.coverImage.width}
+                height={eventsItem.coverImage.height}
+                alt={eventsItem.title}
+              />
+            </figure>
+            <div class="body">
+              <h3>{eventsItem.title}</h3>
+            </div>
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<div class="bar">
+  <a href="/404" data-astro-reload>まとめて予約する</a>
+  <p class="js-tourEventReset">すべてをリセット</p>
+  <p class="more">詳細を見る</p>
+  <span class="js-tourEventCount"></span>
+  <span class="js-tourEventTotal"></span>
+</div>
+
+<script>
+  import $ from "jquery";
+  $(function () {
+    const $checkbox = $(".js-tourEventInput");
+    const $checkboxNum = $checkbox.length;
+    $(".js-tourEventTotal").text($checkboxNum);
+    $checkbox.each(function () {
+      $(this).on("change", function () {
+        const $checked = $(".js-tourEventInput:checked");
+        const $checkedNum = $checked.length;
+        $(".js-tourEventCount").text($checkedNum);
+      });
+    });
+    // ブラウザバック時
+    window.addEventListener("pageshow", () => {
+      if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        const $checked = $(".js-tourEventInput:checked");
+        const $checkedNum = $checked.length;
+        $(".js-tourEventCount").text($checkedNum);
+      }
+    });
+    // すべてリセット
+    $(".js-tourEventReset").on("click", function () {
+      $(".js-tourEventInput").prop("checked", false);
+      $(".js-tourEventCount").text("0");
+    });
+  });
+
+  $(function () {
+  const $checkbox = $(".js-tourEventInput");
+
+  $checkbox.on("change", function () {
+    const $checked = $(".js-tourEventInput:checked");
+    const selectedValues = $checked
+      .map(function () {
+        const selectedValue = $(this).attr("value");
+        return selectedValue;
+      })
+      .get();
+
+    if (selectedValues.length === 0) {
+      const reservationLink = $(".bar a");
+      reservationLink.attr("href", `/404`);
+    } else {
+      const selectedValuesString = selectedValues.join(",");
+      const encryptedValuesString = window.btoa(unescape(encodeURIComponent(selectedValuesString)));
+      const reservationLink = $(".bar a");
+      reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
+    }
+  });
+});
+
+</script>
+<style lang="scss">
+  .list {
+    li {
+      border: 1px solid;
+      border-radius: 16px;
+      overflow: hidden;
+      &:not(:last-of-type) {
+        margin-bottom: 24px;
+      }
+      figure {
+        max-width: 200px;
+      }
+      .heading {
+        background-color: $text-color;
+        color: $white;
+        display: flex;
+        padding: 20px;
+        gap: 10px;
+        input[type="checkbox"] {
+          width: 20px;
+        }
+      }
+      .inner {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding: 20px;
+      }
+      h3 {
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+      }
+    }
+  }
+</style>

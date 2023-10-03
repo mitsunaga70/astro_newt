@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import { newtClient } from "../libs/newt";
+import type { Article } from "../libs/newt";
+import FormatDate from "./formatDate.astro";
+
+export interface Props {
+  tags?: string;
+  classNames?: string;
+  limit?: number;
+}
+const { tags, limit, classNames } = Astro.props;
+const tagId = tags && tags;
+
+const { items: events } = await newtClient.getContents<Article>({
+  appUid: "event",
+  modelUid: "article",
+  query: {
+    select: ["_id", "_sys", "title", "slug", "body", "coverImage"],
+    tags: tagId,
+    limit: limit,
+  },
+});
+---
+
+<ul class="list">
+  {
+    events.map((eventsItem) => {
+      return (
+        <li>
+          <a href={`/articles/${eventsItem.slug}`}>
+            <figure transition:name={eventsItem.slug}>
+              <Image
+                src={eventsItem.coverImage.src}
+                width={eventsItem.coverImage.width}
+                height={eventsItem.coverImage.height}
+                alt={eventsItem.title}
+              />
+            </figure>
+            <div class="body">
+              <h3>{eventsItem.title}</h3>
+              <p class="more">詳細を見る</p>
+            </div>
+          </a>
+        </li>
+      );
+    })
+  }
+</ul>
+
+<style lang="scss">
+  .list {
+    li {
+      border: 1px solid;
+      border-radius: 16px;
+      &:not(:last-of-type) {
+        margin-bottom: 24px;
+      }
+      figure {
+        max-width: 200px;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding: 20px;
+      }
+      h3 {
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+      }
+    }
+  }
+</style>

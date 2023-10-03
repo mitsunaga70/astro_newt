@@ -14,4 +14,9 @@ export const navItems = [
 
     link: "/news/",
   },
+  {
+    text: "EVENT",
+
+    link: "/events/",
+  },
 ];
