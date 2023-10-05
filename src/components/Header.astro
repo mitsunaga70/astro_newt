@@ -1,6 +1,8 @@
 ---
 import { navItems } from "../libs/nav";
 import Button from "./Button.astro";
+
+var data = "data-astro-reload";
 ---
 
 <header class="header js-header">
@@ -11,9 +13,15 @@ import Button from "./Button.astro";
         {
           navItems.map((item) => (
             <li class="item">
-              <a href={item.link} class="link">
-                {item.text}
-              </a>
+              {item.load ? (
+                <a href={item.link} class="link" data-astro-reload>
+                  {item.text}
+                </a>
+              ) : (
+                <a href={item.link} class="link">
+                  {item.text}
+                </a>
+              )}
             </li>
           ))
         }

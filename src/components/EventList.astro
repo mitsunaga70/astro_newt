@@ -28,7 +28,7 @@ const { items: events } = await newtClient.getContents<Article>({
     events.map((eventsItem) => {
       return (
         <li>
-          <a href={`/events/`}>
+          <a href={`/events/`} data-astro-reload>
             <figure transition:name={eventsItem.slug}>
               <Image
                 src={eventsItem.coverImage.src}
