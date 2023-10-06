@@ -10,6 +10,7 @@ import Layout from "../../layouts/Layout.astro";
     <div class="u-tac">
       <SectionTitle ja="CONTACT" />
     </div>
+
     <form action="https://blog-739442.form.newt.so/v1/Ipipvw7aB" method="post">
       <ul>
         <li>
@@ -30,12 +31,15 @@ import Layout from "../../layouts/Layout.astro";
           <textarea id="message" required name="message"></textarea>
         </li>
       </ul>
+      <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" <button type="submit" />
 
-      <button type="submit">送信する</button>
+      <button type="submit" data-astro-cid-ahc3q4vw="">送信する</button>
     </form>
   </Container>
 </Layout>
-
+<script
+  src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
+></script>
 <script>
   import { Base64 } from "js-base64";
 
@@ -50,6 +54,15 @@ import Layout from "../../layouts/Layout.astro";
       eventInput.value = decryptedData;
       eventInputText.textContent = decryptedData;
     }
+  });
+
+  // recaptcha
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
+      .then(function (token) {
+        document.getElementById("recaptchaToken").value = token;
+      });
   });
 </script>
 <style lang="scss">
