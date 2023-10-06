@@ -33,11 +33,12 @@ import Layout from "../../layouts/Layout.astro";
       </ul>
       <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" <button type="submit" />
 
-      <button type="submit" data-astro-cid-ahc3q4vw="">送信する</button>
+      <button type="submit">送信する</button>
     </form>
   </Container>
 </Layout>
 <script
+  is:inline
   src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
 ></script>
 <script>
@@ -55,8 +56,8 @@ import Layout from "../../layouts/Layout.astro";
       eventInputText.textContent = decryptedData;
     }
   });
-
-  // recaptcha
+</script>
+<script>
   grecaptcha.ready(function () {
     grecaptcha
       .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
