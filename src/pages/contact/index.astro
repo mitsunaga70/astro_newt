@@ -13,7 +13,7 @@ import Layout from "../../layouts/Layout.astro";
 
     <form action="https://blog-739442.form.newt.so/v1/J-GNgP80V" method="post">
       <ul>
-        <li>
+        <li class="js-contactEventItem">
           <label for="input-events">Event</label>
           <input id="input-events" required name="events" hidden />
           <p id="input-eventsText" class="u-mt8"></p>
@@ -49,11 +49,14 @@ import Layout from "../../layouts/Layout.astro";
     const eventsParam = params.replace("?selectedEvents=", "");
     const eventInput = document.getElementById("input-events");
     const eventInputText = document.getElementById("input-eventsText");
-    console.log(params);
+
     if (eventsParam) {
       const decryptedData = Base64.decode(eventsParam);
       eventInput.value = decryptedData;
       eventInputText.textContent = decryptedData;
+    } else {
+      const eventForm = document.querySelector(".js-contactEventItem"); // '.eventForm' に対応するクラス名に変更してください
+      eventForm.remove();
     }
   });
 </script>

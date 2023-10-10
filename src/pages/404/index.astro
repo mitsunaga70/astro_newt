@@ -1,0 +1,26 @@
+---
+import Button from "../../components/Button.astro";
+import Container from "../../components/Container.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <Container>
+    <h2>404 Not Found</h2>
+    <p>お探しのページは見つかりませんでした。<br />移動または削除された可能性があります。</p>
+    <Button text="トップへ" />
+  </Container>
+</Layout>
+
+<style>
+  h2 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1.5em;
+    margin-top: 10rem;
+  }
+  p {
+    text-align: center;
+    margin-bottom: 3em;
+  }
+</style>

@@ -40,9 +40,13 @@ var data = "data-astro-reload";
     padding: 1em 2em;
     border-radius: 30px;
     line-height: 1;
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    z-index: 10;
   }
   header {
-    padding: 30px 30px;
+    // padding: 30px 30px;
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
@@ -52,6 +56,10 @@ var data = "data-astro-reload";
   .logo {
     font-size: 2.4rem;
     display: block;
+    position: fixed;
+    left: 30px;
+    top: 30px;
+    z-index: 10;
   }
   .inner {
     display: flex;
@@ -59,6 +67,11 @@ var data = "data-astro-reload";
     align-items: center;
   }
   nav {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 40px;
+    z-index: 10;
   }
   ul {
     display: flex;

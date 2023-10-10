@@ -30,7 +30,7 @@ const { items: events } = await newtClient.getContents<Article>({
     events.map((eventsItem) => {
       return (
         <li>
-          <div class="heading">
+          <label class="heading" for={eventsItem._id}>
             <input
               type="checkbox"
               name={eventsItem._id}
@@ -38,11 +38,11 @@ const { items: events } = await newtClient.getContents<Article>({
               class="js-tourEventInput"
               value={eventsItem.title}
             />
-            <label for={eventsItem._id}>
+            <div>
               <p>選択する</p>
-            </label>
-          </div>
-          <div class="inner">
+            </div>
+          </label>
+          <label for={eventsItem._id} class="inner">
             <figure transition:name={eventsItem.slug}>
               <Image
                 src={eventsItem.coverImage.src}
@@ -54,7 +54,7 @@ const { items: events } = await newtClient.getContents<Article>({
             <div class="body">
               <h3>{eventsItem.title}</h3>
             </div>
-          </div>
+          </label>
         </li>
       );
     })
