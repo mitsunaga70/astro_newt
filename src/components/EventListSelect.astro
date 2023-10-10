@@ -88,21 +88,15 @@ const { items: events } = await newtClient.getContents<Article>({
         });
       });
     }
-    function blowserBack() {
-      // ブラウザバック時
-      window.addEventListener("pageshow", () => {
-        if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
-          const $checked = $(".js-tourEventInput:checked");
-          const $checkedNum = $checked.length;
-          $(".js-tourEventCount").text($checkedNum);
-        }
-      });
-    }
+
     function inputReset() {
       // すべてリセット
       $(".js-tourEventReset").on("click", function () {
         $(".js-tourEventInput").prop("checked", false);
         $(".js-tourEventCount").text("0");
+
+        const reservationLink = $(".bar a");
+        reservationLink.attr("href", `/404`);
       });
     }
 
@@ -137,13 +131,50 @@ const { items: events } = await newtClient.getContents<Article>({
         }
       });
     }
+    function blowserBack() {
+      // ブラウザバック時
+      window.addEventListener("pageshow", () => {
+        if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
+          const $checkedInput = $(".js-tourEventInput:checked");
+          const $checkedNum = $checkedInput.length;
+          $(".js-tourEventCount").text($checkedNum);
+
+          const $checked = $(".js-tourEventInput:checked");
+          const selectedValues = $checked
+            .map(function () {
+              const selectedValue = $(this).attr("value");
+              return selectedValue;
+            })
+            .get();
+          if (selectedValues.length === 0) {
+            const reservationLink = $(".bar a");
+            reservationLink.attr("href", `/404`);
+          } else {
+            const selectedValuesString = selectedValues.join(",");
+
+            console.log(selectedValuesString);
+            (function () {
+              var aaa = Base64.encode(selectedValuesString);
+
+              var bbb = Base64.decode(aaa);
+            })();
+            const encryptedValuesString = Base64.encode(selectedValuesString);
+
+            const reservationLink = $(".bar a");
+            reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
+          }
+        }
+      });
+    }
     $(function () {
       inputTotal();
-      blowserBack();
+
       inputReset();
       inputSend();
+      blowserBack();
     });
   }
+
   eventListSelect();
   document.addEventListener("astro:after-swap", eventListSelect);
 </script>
