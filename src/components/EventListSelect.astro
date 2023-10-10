@@ -18,6 +18,7 @@ const { items: events } = await newtClient.getContents<Article>({
   modelUid: "article",
   query: {
     select: ["_id", "_sys", "title", "slug", "body", "coverImage"],
+    order: ["-_priority", "-_sys.customOrder"],
     tags: tagId,
     limit: limit,
   },
