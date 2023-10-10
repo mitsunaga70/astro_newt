@@ -128,7 +128,7 @@ const { items: events } = await newtClient.getContents<Article>({
           const encryptedValuesString = Base64.encode(selectedValuesString);
 
           const reservationLink = $(".bar a");
-          reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
+          reservationLink.attr("href", `/events/form/?selectedEvents=${encryptedValuesString}`);
         }
       });
     }
@@ -162,7 +162,7 @@ const { items: events } = await newtClient.getContents<Article>({
             const encryptedValuesString = Base64.encode(selectedValuesString);
 
             const reservationLink = $(".bar a");
-            reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
+            reservationLink.attr("href", `/events/form/?selectedEvents=${encryptedValuesString}`);
           }
         }
       });
@@ -213,7 +213,9 @@ const { items: events } = await newtClient.getContents<Article>({
       }
     }
   }
-
+  label {
+    cursor: pointer;
+  }
   .bar {
     position: fixed;
     bottom: 0;
