@@ -75,64 +75,77 @@ const { items: events } = await newtClient.getContents<Article>({
 <script>
   import $ from "jquery";
   import { Base64 } from "js-base64";
-  $(function () {
-    const $checkbox = $(".js-tourEventInput");
-    const $checkboxNum = $checkbox.length;
-    $(".js-tourEventTotal").text($checkboxNum);
-    $checkbox.each(function () {
-      $(this).on("change", function () {
-        const $checked = $(".js-tourEventInput:checked");
-        const $checkedNum = $checked.length;
-        $(".js-tourEventCount").text($checkedNum);
+  function eventListSelect() {
+    function inputTotal() {
+      const $checkbox = $(".js-tourEventInput");
+      const $checkboxNum = $checkbox.length;
+      $(".js-tourEventTotal").text($checkboxNum);
+      $checkbox.each(function () {
+        $(this).on("change", function () {
+          const $checked = $(".js-tourEventInput:checked");
+          const $checkedNum = $checked.length;
+          $(".js-tourEventCount").text($checkedNum);
+        });
       });
-    });
-    // ブラウザバック時
-    window.addEventListener("pageshow", () => {
-      if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
+    }
+    function blowserBack() {
+      // ブラウザバック時
+      window.addEventListener("pageshow", () => {
+        if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
+          const $checked = $(".js-tourEventInput:checked");
+          const $checkedNum = $checked.length;
+          $(".js-tourEventCount").text($checkedNum);
+        }
+      });
+    }
+    function inputReset() {
+      // すべてリセット
+      $(".js-tourEventReset").on("click", function () {
+        $(".js-tourEventInput").prop("checked", false);
+        $(".js-tourEventCount").text("0");
+      });
+    }
+
+    function inputSend() {
+      const $checkbox = $(".js-tourEventInput");
+
+      $checkbox.on("change", function () {
         const $checked = $(".js-tourEventInput:checked");
-        const $checkedNum = $checked.length;
-        $(".js-tourEventCount").text($checkedNum);
-      }
+        const selectedValues = $checked
+          .map(function () {
+            const selectedValue = $(this).attr("value");
+            return selectedValue;
+          })
+          .get();
+
+        if (selectedValues.length === 0) {
+          const reservationLink = $(".bar a");
+          reservationLink.attr("href", `/404`);
+        } else {
+          const selectedValuesString = selectedValues.join(",");
+
+          console.log(selectedValuesString);
+          (function () {
+            var aaa = Base64.encode(selectedValuesString);
+
+            var bbb = Base64.decode(aaa);
+          })();
+          const encryptedValuesString = Base64.encode(selectedValuesString);
+
+          const reservationLink = $(".bar a");
+          reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
+        }
+      });
+    }
+    $(function () {
+      inputTotal();
+      blowserBack();
+      inputReset();
+      inputSend();
     });
-    // すべてリセット
-    $(".js-tourEventReset").on("click", function () {
-      $(".js-tourEventInput").prop("checked", false);
-      $(".js-tourEventCount").text("0");
-    });
-  });
-
-  $(function () {
-    const $checkbox = $(".js-tourEventInput");
-
-    $checkbox.on("change", function () {
-      const $checked = $(".js-tourEventInput:checked");
-      const selectedValues = $checked
-        .map(function () {
-          const selectedValue = $(this).attr("value");
-          return selectedValue;
-        })
-        .get();
-
-      if (selectedValues.length === 0) {
-        const reservationLink = $(".bar a");
-        reservationLink.attr("href", `/404`);
-      } else {
-        const selectedValuesString = selectedValues.join(",");
-
-        console.log(selectedValuesString);
-        (function () {
-          var aaa = Base64.encode(selectedValuesString);
-          console.log(aaa);
-          var bbb = Base64.decode(aaa);
-          console.log(bbb);
-        })();
-        const encryptedValuesString = Base64.encode(selectedValuesString);
-
-        const reservationLink = $(".bar a");
-        reservationLink.attr("href", `/contact/?selectedEvents=${encryptedValuesString}`);
-      }
-    });
-  });
+  }
+  eventListSelect();
+  document.addEventListener("astro:after-swap", eventListSelect);
 </script>
 <style lang="scss">
   .list {

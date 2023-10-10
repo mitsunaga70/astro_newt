@@ -17,6 +17,6 @@ export const navItems = [
   {
     text: "EVENT",
     link: "/events/",
-    load: true,
+    load: false,
   },
 ];
