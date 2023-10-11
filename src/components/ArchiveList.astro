@@ -77,6 +77,7 @@ const { items: articles } = await newtClient.getContents<Article>({
       @include vw(h, 230);
       max-height: 230px;
       border: 1px solid #ddd;
+      flex-shrink: 0;
       img {
         width: 100%;
         display: block;
