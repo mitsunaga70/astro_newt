@@ -37,6 +37,7 @@ const { items: articles } = await newtClient.getContents<Article>({
                 width={338 * 2}
                 height={225 * 2}
                 alt={article.title}
+                loading="eager"
               />
             </figure>
             <div class="body">

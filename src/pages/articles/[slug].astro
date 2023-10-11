@@ -27,7 +27,13 @@ const { article } = Astro.props;
     <div class="blog-single">
       <h1>{article.title}</h1>
       <figure transition:name={article.slug} class="cover">
-        <Image src={article.coverImage.src} width={780} height={520} alt={article.title} />
+        <Image
+          src={article.coverImage.src}
+          width={780}
+          height={520}
+          alt={article.title}
+          loading="eager"
+        />
       </figure>
       <article set:html={article.body} />
       <Button text="トップへ" link="/" />
