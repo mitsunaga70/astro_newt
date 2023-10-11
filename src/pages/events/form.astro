@@ -2,16 +2,16 @@
 import Container from "../../components/Container.astro";
 import EventInput from "../../components/EventInput.tsx";
 import PageBody from "../../components/PageBody.astro";
-import SectionTitle from "../../components/SectionTitle.astro";
+import EventTitle from "../../components/EventTitle.astro";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout>
+  <div class="u-tac">
+    <EventTitle />
+  </div>
   <PageBody>
     <Container value="xsmall">
-      <div class="u-tac">
-        <SectionTitle ja="EVENT FORM" />
-      </div>
       <form action="https://blog-739442.form.newt.so/v1/gnyT5xvLQ" method="post">
         <ul>
           <li class="js-contactEventItem">
@@ -61,9 +61,15 @@ import Layout from "../../layouts/Layout.astro";
       const decryptedData = Base64.decode(eventsParam);
       eventInput.value = decryptedData;
       eventInputText.textContent = decryptedData;
-    } else {
-      const eventForm = document.querySelector(".js-contactEventItem"); // '.eventForm' に対応するクラス名に変更してください
-      eventForm.remove();
+    }
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    const eventInputText = document.getElementById("input-eventsText");
+
+    if (eventInputText) {
+      const eventsText = eventInputText.textContent;
+      const formattedText = eventsText.replace(/,/g, "<br>");
+      eventInputText.innerHTML = formattedText;
     }
   });
 </script>

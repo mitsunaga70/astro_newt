@@ -10,7 +10,10 @@ const pageTitleClass = reversal ? "pageTitle js-pageTitle reversal" : "pageTitle
 
 <Container>
   <div class={pageTitleClass}>
-    <h1 class="ja js-word"><span class="js-word__item">{ja}</span></h1>
+    <h1 class="ja js-word">
+      <span class="js-word__item">EVENT</span>
+      <span class="js-word__item"> FORM</span>
+    </h1>
   </div>
 </Container>
 
@@ -23,6 +26,11 @@ const pageTitleClass = reversal ? "pageTitle js-pageTitle reversal" : "pageTitle
     opacity: 0;
     &.is-loaded {
       opacity: 1;
+    }
+    .js-word {
+      display: flex;
+      justify-content: center;
+      gap: 0.25em;
     }
   }
   :global(.js-word__cell) {
@@ -76,7 +84,7 @@ const pageTitleClass = reversal ? "pageTitle js-pageTitle reversal" : "pageTitle
   }
   pageHeaderAnm();
   document.addEventListener("DOMContentLoaded", pageBefore);
-  document.addEventListener("DOMContentLoaded", pageHeaderAnm);
-  document.addEventListener("astro:page-load", pageBefore);
-  document.addEventListener("astro:page-load", pageHeaderAnm);
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(pageHeaderAnm, 1);
+  });
 </script>
