@@ -34,8 +34,8 @@ const { items: articles } = await newtClient.getContents<Article>({
             <figure transition:name={article.slug}>
               <Image
                 src={article.coverImage.src}
-                width={article.coverImage.width}
-                height={article.coverImage.height}
+                width={338 * 2}
+                height={225 * 2}
                 alt={article.title}
               />
             </figure>

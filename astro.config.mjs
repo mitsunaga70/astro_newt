@@ -9,6 +9,9 @@ export default defineConfig({
   integrations: [sitemap({
     lastmod: new Date()
   }), react()],
+  image: {
+    domains: ["storage.googleapis.com", "blog-739442.assets.newt.so"],
+  },
   vite: {
     css: {
       postcss: {
