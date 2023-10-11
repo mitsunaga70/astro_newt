@@ -1,12 +1,116 @@
 ---
 // import styles from "../assets/styles/component/Header.module.scss";
-
 import { Image } from "astro:assets";
+import { newtClient } from "../../libs/newt";
+import type { Article } from "../../libs/newt";
 
-import Logo from "../Logo.astro";
+export interface Props {
+  tags?: string;
+  classNames?: string;
+  limit?: number;
+}
+const { tags, limit, classNames } = Astro.props;
+const tagId = tags && tags;
+
+const limitNumber = limit || "100";
+const { items: articles } = await newtClient.getContents<Article>({
+  appUid: "blog",
+  modelUid: "article",
+  query: {
+    select: ["_id", "title", "slug", "body", "coverImage", "top"],
+    order: ["-_priority", "-_sys.customOrder"],
+    tags: tagId,
+    limit: limit,
+  },
+});
 ---
 
-<div id="hero" class="hero"></div>
+<div id="hero" class="hero">
+  <div class="inner js-hero">
+    <ul class="list swiper-wrapper">
+      {
+        articles.map((article) => {
+          if (article.top) {
+            return (
+              <li class="swiper-slide">
+                <a href={`/articles/${article.slug}`} class="link">
+                  <figure class="img">
+                    <Image
+                      src={article.coverImage.src}
+                      width={1440 * 2}
+                      height={800 * 2}
+                      alt={article.title}
+                    />
+                  </figure>
+                  <div class="body">
+                    <h3 class="title">{article.title}</h3>
+                    <p class="more">詳細を見る</p>
+                  </div>
+                </a>
+              </li>
+            );
+          }
+        })
+      }
+    </ul>
+  </div>
+</div>
 
-<script></script>
-<style lang="scss"></style>
+<script>
+  import Swiper from "swiper/bundle";
+  import "swiper/swiper-bundle.css";
+  var swiper = new Swiper(".js-hero", {
+    followFinger: false,
+    speed: 800,
+    slidesPerView: 1,
+    spaceBetween: 0,
+    SimulateTouch: true,
+    effect: "fade",
+    fadeEffect: {
+      crossFade: true,
+    },
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+  });
+</script>
+<style lang="scss">
+  .hero {
+    margin-top: -140px;
+    height: 100vh;
+    max-height: 800px;
+    margin-bottom: 80px;
+    position: relative;
+    .inner {
+      height: 100%;
+    }
+    .link {
+      display: block;
+      height: 100%;
+    }
+    .body {
+      position: absolute;
+      bottom: 0;
+      color: #ffff;
+      left: 120px;
+      bottom: 60px;
+    }
+    .title {
+      font-size: 5.6rem;
+      margin-bottom: 0.8em;
+    }
+    .more {
+      font-size: 2.2rem;
+    }
+    .img {
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+</style>
