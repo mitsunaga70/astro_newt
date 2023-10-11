@@ -17,9 +17,29 @@ import { fade } from "astro:transitions";
   import "../assets/script/hash";
   import "../assets/script/resizereload";
 </script>
+<script>
+  function pageBodyAnm() {
+    function loadAnm() {
+      let targets = document.getElementsByClassName("main");
+      Array.from(targets).forEach((target) => {
+        setTimeout(() => {
+          target.classList.add("is-loaded");
+        }, 100);
+      });
+    }
 
+    loadAnm();
+  }
+  pageBodyAnm();
+  document.addEventListener("astro:page-load", pageBodyAnm);
+</script>
 <style lang="scss">
   main {
     padding: 140px 0 100px;
+    opacity: 0;
+    transition: 0.5s;
+    &.is-loaded {
+      opacity: 1;
+    }
   }
 </style>

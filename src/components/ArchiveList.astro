@@ -31,13 +31,12 @@ const { items: articles } = await newtClient.getContents<Article>({
       return (
         <li>
           <a href={`/articles/${article.slug}`}>
-            <figure transition:name={article.slug}>
+            <figure>
               <Image
                 src={article.coverImage.src}
                 width={338 * 2}
                 height={225 * 2}
                 alt={article.title}
-                loading="eager"
               />
             </figure>
             <div class="body">
