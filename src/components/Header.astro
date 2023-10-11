@@ -8,7 +8,7 @@ var data = "data-astro-reload";
 <header class="header js-header">
   <div class="inner">
     <a href="/" class="logo">ヘッドレスCMS検証</a>
-    <nav>
+    <nav class="js-gnav">
       <ul>
         {
           navItems.map((item) => (
@@ -31,6 +31,23 @@ var data = "data-astro-reload";
   </div>
 </header>
 <script src="../assets/script/header.ts"></script>
+
+<script>
+  function headerScroll() {
+    var hero = document.querySelector(".js-hero");
+    var header = document.querySelector(".js-header");
+
+    window.addEventListener("scroll", function () {
+      if (window.pageYOffset >= hero.offsetHeight) {
+        header.classList.add("is-scroll");
+      } else {
+        header.classList.remove("is-scroll");
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", headerScroll);
+  document.addEventListener("astro:page-load", headerScroll);
+</script>
 <style lang="scss">
   .contact {
     background-color: $text-color;
@@ -78,5 +95,15 @@ var data = "data-astro-reload";
     justify-content: flex-end;
     gap: 30px;
     font-size: 1.8rem;
+  }
+
+  :global(.pageTop) {
+    .js-header {
+      color: #fff;
+
+      &.is-scroll {
+        color: $text-color;
+      }
+    }
   }
 </style>
