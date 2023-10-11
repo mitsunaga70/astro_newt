@@ -6,6 +6,8 @@ import { newtClient } from "../../../libs/newt";
 import type { Tag } from "../../../libs/newt";
 import Archive from "../../../components/ArchiveList.astro";
 import SectionTitle from "../../../components/SectionTitle.astro";
+import PageBody from "../../../components/PageBody.astro";
+import PageTitle from "../../../components/PageTitle.astro";
 export const getStaticPaths = async () => {
   const { items: tags } = await newtClient.getContents<Tag>({
     appUid: "blog",
@@ -26,9 +28,11 @@ const tagId = tag._id;
 ---
 
 <Layout>
-  <Container>
-    <SectionTitle ja={tag.name} />
-    <TagList />
-    <Archive tags={tagId} classNames="-col3" />
-  </Container>
+  <PageTitle ja={tag.name} />
+  <PageBody>
+    <Container>
+      <TagList />
+      <Archive tags={tagId} classNames="-col3" />
+    </Container>
+  </PageBody>
 </Layout>

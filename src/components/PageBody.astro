@@ -1,0 +1,31 @@
+<div class="wrapper js-pageBody">
+  <slot />
+</div>
+
+<script>
+  function pageBodyAnm() {
+    function loadAnm() {
+      let targets = document.getElementsByClassName("js-pageBody");
+      Array.from(targets).forEach((target) => {
+        setTimeout(() => {
+          target.classList.add("is-loaded");
+        }, 100);
+      });
+    }
+
+    loadAnm();
+  }
+  pageBodyAnm();
+  document.addEventListener("astro:page-load", pageBodyAnm);
+</script>
+<style lang="scss">
+  .wrapper {
+    opacity: 0;
+    transition: 0.3s ease-out;
+    transform: translateY(15px);
+    &.is-loaded {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>

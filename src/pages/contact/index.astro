@@ -1,36 +1,43 @@
 ---
 import Container from "../../components/Container.astro";
 import EventInput from "../../components/EventInput.tsx";
-import SectionTitle from "../../components/SectionTitle.astro";
+import PageBody from "../../components/PageBody.astro";
+import PageTitle from "../../components/PageTitle.astro";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout>
-  <Container value="xsmall">
-    <div class="u-tac">
-      <SectionTitle ja="CONTACT" />
-    </div>
-
-    <form action="https://blog-739442.form.newt.so/v1/a3CPAUnoP" method="post">
-      <ul>
-        <li>
-          <label for="name">Name</label>
-          <input id="name" required name="name" />
-        </li>
-        <li>
-          <label for="email">Email</label>
-          <input id="email" required name="email" type="email" />
-        </li>
-        <li>
-          <label for="message">Message</label>
-          <textarea id="message" required name="message"></textarea>
-        </li>
-      </ul>
-      <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" <button type="submit" />
-
-      <button type="submit">送信する</button>
-    </form>
-  </Container>
+  <div class="u-tac">
+    <PageTitle ja="CONTACT" />
+  </div>
+  <PageBody>
+    <Container value="xsmall">
+      <form action="https://blog-739442.form.newt.so/v1/a3CPAUnoP" method="post">
+        <ul>
+          <li>
+            <label for="name">Name</label>
+            <input id="name" required name="name" />
+          </li>
+          <li>
+            <label for="email">Email</label>
+            <input id="email" required name="email" type="email" />
+          </li>
+          <li>
+            <label for="message">Message</label>
+            <textarea id="message" required name="message"></textarea>
+          </li>
+        </ul>
+        <input
+          type="hidden"
+          id="recaptchaToken"
+          name="googleReCaptchaToken"
+          <button
+          type="submit"
+        />
+        <button type="submit">送信する</button>
+      </form>
+    </Container>
+  </PageBody>
 </Layout>
 <script
   is:inline

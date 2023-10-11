@@ -5,6 +5,7 @@ import type { Article } from "../../libs/newt";
 import Container from "../../components/Container.astro";
 import Button from "../../components/Button.astro";
 import { Image } from "astro:assets";
+import PageBody from "../../components/PageBody.astro";
 export const getStaticPaths = async () => {
   const { items: news } = await newtClient.getContents<Article>({
     appUid: "news",
@@ -23,14 +24,15 @@ const { newsItem } = Astro.props;
 ---
 
 <Layout>
-  <Container value="small">
-    <div class="blog-single">
-      <h1>{newsItem.title}</h1>
-
-      <article set:html={newsItem.body} />
-      <Button text="トップへ" link="/" />
-    </div>
-  </Container>
+  <PageBody>
+    <Container value="small">
+      <div class="blog-single">
+        <h1>{newsItem.title}</h1>
+        <article set:html={newsItem.body} />
+        <Button text="トップへ" link="/" />
+      </div>
+    </Container>
+  </PageBody>
 </Layout>
 
 <style lang="scss">

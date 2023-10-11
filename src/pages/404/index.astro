@@ -1,15 +1,18 @@
 ---
 import Button from "../../components/Button.astro";
 import Container from "../../components/Container.astro";
+import PageBody from "../../components/PageBody.astro";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout>
-  <Container>
-    <h2>404 Not Found</h2>
-    <p>お探しのページは見つかりませんでした。<br />移動または削除された可能性があります。</p>
-    <Button text="トップへ" />
-  </Container>
+  <PageBody>
+    <Container>
+      <h2>404 Not Found</h2>
+      <p>お探しのページは見つかりませんでした。<br />移動または削除された可能性があります。</p>
+      <Button text="トップへ" />
+    </Container>
+  </PageBody>
 </Layout>
 
 <style>

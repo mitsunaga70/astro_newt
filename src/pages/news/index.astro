@@ -1,17 +1,21 @@
 ---
-import SectionTitle from "../../components/SectionTitle.astro";
 import Newslist from "../../components/NewsList.astro";
 import Layout from "../../layouts/Layout.astro";
 import Container from "../../components/Container.astro";
 import CateList from "../../components/CateList.astro";
+import PageBody from "../../components/PageBody.astro";
+import PageTitle from "../../components/PageTitle.astro";
 ---
 
 <Layout>
-  <Container>
-    <section>
-      <SectionTitle ja="NEWS" />
-      <CateList />
-      <Newslist />
-    </section>
-  </Container>
+  <PageTitle ja="NEWS" />
+
+  <PageBody>
+    <Container>
+      <section>
+        <CateList />
+        <Newslist />
+      </section>
+    </Container>
+  </PageBody>
 </Layout>

@@ -4,6 +4,7 @@ import { newtClient } from "../libs/newt";
 import type { Article } from "../libs/newt";
 import FormatDate from "./formatDate.astro";
 import Button from "./Button.astro";
+import PageBody from "./PageBody.astro";
 
 export interface Props {
   tags?: string;
@@ -25,41 +26,43 @@ const { items: events } = await newtClient.getContents<Article>({
 });
 ---
 
-<ul class="list">
-  {
-    events.map((eventsItem) => {
-      return (
-        <li>
-          <label class="heading" for={eventsItem._id}>
-            <input
-              type="checkbox"
-              name={eventsItem._id}
-              id={eventsItem._id}
-              class="js-tourEventInput"
-              value={eventsItem.title}
-            />
-            <div>
-              <p>選択する</p>
-            </div>
-          </label>
-          <label for={eventsItem._id} class="inner">
-            <figure transition:name={eventsItem.slug}>
-              <Image
-                src={eventsItem.coverImage.src}
-                width={200 * 2}
-                height={133 * 2}
-                alt={eventsItem.title}
+<PageBody>
+  <ul class="list">
+    {
+      events.map((eventsItem) => {
+        return (
+          <li>
+            <label class="heading" for={eventsItem._id}>
+              <input
+                type="checkbox"
+                name={eventsItem._id}
+                id={eventsItem._id}
+                class="js-tourEventInput"
+                value={eventsItem.title}
               />
-            </figure>
-            <div class="body">
-              <h3>{eventsItem.title}</h3>
-            </div>
-          </label>
-        </li>
-      );
-    })
-  }
-</ul>
+              <div>
+                <p>選択する</p>
+              </div>
+            </label>
+            <label for={eventsItem._id} class="inner">
+              <figure>
+                <Image
+                  src={eventsItem.coverImage.src}
+                  width={200 * 2}
+                  height={133 * 2}
+                  alt={eventsItem.title}
+                />
+              </figure>
+              <div class="body">
+                <h3>{eventsItem.title}</h3>
+              </div>
+            </label>
+          </li>
+        );
+      })
+    }
+  </ul>
+</PageBody>
 
 <div class="bar">
   <p class="js-tourEventReset">すべてをリセット</p>

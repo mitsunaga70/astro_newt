@@ -10,29 +10,31 @@ import NewsList from "../components/NewsList.astro";
 import Button from "../components/Button.astro";
 import aboutImage from "../assets/img/about.jpg";
 import EventList from "../components/EventList.astro";
+import PageBody from "../components/PageBody.astro";
 ---
 
 <Layout>
-  <Container>
-    <!-- <section class="u-mb80">
-      <Image src={aboutImage} alt="" width={aboutImage.width} height={aboutImage.height} />
-      <SectionTitle ja="私について" />
-      <Button text="ABOUT" />
-    </section> -->
-    <section class="u-mb80">
-      <SectionTitle ja="BLOG" />
-      <TagList />
-      <Archive limit={3} />
-    </section>
-    <section class="u-mb80">
-      <SectionTitle ja="NEWS" />
-      <CateList />
-      <NewsList />
-    </section>
-    <section>
-      <SectionTitle ja="EVENT" />
-
-      <EventList limit={3} />
-    </section>
-  </Container>
+  <PageBody>
+    <Container>
+      <!-- <section class="u-mb80">
+        <Image src={aboutImage} alt="" width={aboutImage.width} height={aboutImage.height} />
+        <SectionTitle ja="私について" />
+        <Button text="ABOUT" />
+      </section> -->
+      <section class="u-mb80">
+        <SectionTitle ja="BLOG" />
+        <TagList />
+        <Archive limit={3} />
+      </section>
+      <section class="u-mb80">
+        <SectionTitle ja="NEWS" />
+        <CateList />
+        <NewsList />
+      </section>
+      <section>
+        <SectionTitle ja="EVENT" />
+        <EventList limit={3} />
+      </section>
+    </Container>
+  </PageBody>
 </Layout>

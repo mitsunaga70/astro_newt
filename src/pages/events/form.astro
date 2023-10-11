@@ -1,41 +1,48 @@
 ---
 import Container from "../../components/Container.astro";
 import EventInput from "../../components/EventInput.tsx";
+import PageBody from "../../components/PageBody.astro";
 import SectionTitle from "../../components/SectionTitle.astro";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout>
-  <Container value="xsmall">
-    <div class="u-tac">
-      <SectionTitle ja="EVENT FORM" />
-    </div>
-
-    <form action="https://blog-739442.form.newt.so/v1/gnyT5xvLQ" method="post">
-      <ul>
-        <li class="js-contactEventItem">
-          <label for="input-events">Event</label>
-          <input id="input-events" required name="events" hidden />
-          <p id="input-eventsText" class="u-mt8"></p>
-        </li>
-        <li>
-          <label for="name">Name</label>
-          <input id="name" required name="name" />
-        </li>
-        <li>
-          <label for="email">Email</label>
-          <input id="email" required name="email" type="email" />
-        </li>
-        <li>
-          <label for="message">Message</label>
-          <textarea id="message" required name="message"></textarea>
-        </li>
-      </ul>
-      <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" <button type="submit" />
-
-      <button type="submit">送信する</button>
-    </form>
-  </Container>
+  <PageBody>
+    <Container value="xsmall">
+      <div class="u-tac">
+        <SectionTitle ja="EVENT FORM" />
+      </div>
+      <form action="https://blog-739442.form.newt.so/v1/gnyT5xvLQ" method="post">
+        <ul>
+          <li class="js-contactEventItem">
+            <label for="input-events">Event</label>
+            <input id="input-events" required name="events" hidden />
+            <p id="input-eventsText" class="u-mt8"></p>
+          </li>
+          <li>
+            <label for="name">Name</label>
+            <input id="name" required name="name" />
+          </li>
+          <li>
+            <label for="email">Email</label>
+            <input id="email" required name="email" type="email" />
+          </li>
+          <li>
+            <label for="message">Message</label>
+            <textarea id="message" required name="message"></textarea>
+          </li>
+        </ul>
+        <input
+          type="hidden"
+          id="recaptchaToken"
+          name="googleReCaptchaToken"
+          <button
+          type="submit"
+        />
+        <button type="submit">送信する</button>
+      </form>
+    </Container>
+  </PageBody>
 </Layout>
 <script
   is:inline

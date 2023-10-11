@@ -1,14 +1,17 @@
 ---
 import Button from "../../components/Button.astro";
 import Container from "../../components/Container.astro";
+import PageBody from "../../components/PageBody.astro";
 import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout>
-  <Container>
-    <p>送信が完了しました</p>
-    <Button text="トップへ" />
-  </Container>
+  <PageBody>
+    <Container>
+      <p>送信が完了しました</p>
+      <Button text="トップへ" />
+    </Container>
+  </PageBody>
 </Layout>
 
 <style>
