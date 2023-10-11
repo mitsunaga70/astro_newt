@@ -9,9 +9,7 @@ export default defineConfig({
   integrations: [sitemap({
     lastmod: new Date()
   }), react()],
-  image: {
-    domains: ["storage.googleapis.com", "blog-739442.assets.newt.so"],
-  },
+
   vite: {
     css: {
       postcss: {
@@ -29,5 +27,8 @@ export default defineConfig({
     port: 8080,
     open: true
   },
-  site: 'https://〇〇.jp'
+  site: 'https://〇〇.jp',
+  image: {
+    domains: ["blog-739442.assets.newt.so"],
+  },
 });
