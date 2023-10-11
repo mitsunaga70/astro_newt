@@ -119,7 +119,6 @@ const { items: events } = await newtClient.getContents<Article>({
         } else {
           const selectedValuesString = selectedValues.join(",");
 
-          console.log(selectedValuesString);
           (function () {
             var aaa = Base64.encode(selectedValuesString);
 
@@ -153,7 +152,6 @@ const { items: events } = await newtClient.getContents<Article>({
           } else {
             const selectedValuesString = selectedValues.join(",");
 
-            console.log(selectedValuesString);
             (function () {
               var aaa = Base64.encode(selectedValuesString);
 
