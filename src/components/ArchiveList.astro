@@ -17,7 +17,7 @@ const { items: articles } = await newtClient.getContents<Article>({
   appUid: "blog",
   modelUid: "article",
   query: {
-    select: ["_id", "title", "slug", "body", "coverImage"],
+    select: ["_id", "title", "slug", "body", "coverImage", "tags"],
     order: ["-_priority", "-_sys.customOrder"],
     tags: tagId,
     limit: limit,
@@ -40,7 +40,14 @@ const { items: articles } = await newtClient.getContents<Article>({
               />
             </figure>
             <div class="body">
+              <ul class="tag_list">
+                {article.tags &&
+                  article.tags.map((tag) => {
+                    return <li class="tag_item">{tag.name}</li>;
+                  })}
+              </ul>
               <h3>{article.title}</h3>
+
               <p class="more">詳細を見る</p>
             </div>
           </a>
@@ -72,6 +79,19 @@ const { items: articles } = await newtClient.getContents<Article>({
       display: flex;
       flex-direction: column;
       height: 100%;
+      @include bp(pc) {
+        figure {
+          overflow: hidden;
+        }
+        img {
+          transition: 0.3s ease-out;
+        }
+        &:hover {
+          img {
+            transform: scale(1.15);
+          }
+        }
+      }
     }
     figure {
       @include vw(h, 230);
@@ -88,8 +108,9 @@ const { items: articles } = await newtClient.getContents<Article>({
     }
     h3 {
       font-size: 2.2rem;
-      margin-top: 1em;
+
       line-height: 1.5;
+      height: 100%;
     }
     .more {
       background-color: $text-color;
@@ -106,6 +127,23 @@ const { items: articles } = await newtClient.getContents<Article>({
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
+      margin-top: 2.2rem;
+    }
+    .tag_list {
+      display: flex;
+      flex-wrap: wrap;
+      white-space: nowrap;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
+    .tag_item {
+      border: 1px solid;
+      border-radius: 5px;
+      padding: 0.5em 0.5em;
+      line-height: 1;
+      font-size: 1.3rem;
+      width: fit-content;
+      flex: 0;
     }
   }
 </style>

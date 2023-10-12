@@ -15,7 +15,7 @@ const { items: news } = await newtClient.getContents<Article>({
   appUid: "news",
   modelUid: "article",
   query: {
-    select: ["_id", "_sys", "title", "slug", "body"],
+    select: ["_id", "_sys", "title", "slug", "body", "categories"],
     order: ["-_priority", "-_sys.customOrder"],
     categories: cateId,
   },
@@ -29,6 +29,12 @@ const { items: news } = await newtClient.getContents<Article>({
         <li>
           <a href={`/news/${newsItem.slug}`}>
             <FormatDate date={newsItem._sys.raw.createdAt} />
+            <ul class="tag_list">
+              {newsItem.categories &&
+                newsItem.categories.map((category) => {
+                  return <li class="category_item">{category.name}</li>;
+                })}
+            </ul>
             <h3>{newsItem.title}</h3>
           </a>
         </li>
@@ -39,7 +45,7 @@ const { items: news } = await newtClient.getContents<Article>({
 
 <style lang="scss">
   .list {
-    li {
+    > li {
       border-bottom: 1px solid;
       &:first-of-type {
         a {
@@ -52,11 +58,33 @@ const { items: news } = await newtClient.getContents<Article>({
       align-items: center;
       padding: 1em 0;
       gap: 30px;
+      @include bp(pc) {
+        transition: 0.2s ease-out;
+        &:hover {
+          color: $red;
+        }
+      }
     }
 
     h3 {
       font-size: 2rem;
       line-height: 1.5;
+    }
+    .category_list {
+      display: flex;
+      flex-wrap: wrap;
+      white-space: nowrap;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
+    .category_item {
+      border: 1px solid;
+      border-radius: 5px;
+      padding: 0.3em 0.5em 0.5em;
+      line-height: 1;
+      font-size: 1.3rem;
+      width: fit-content;
+      flex: 0;
     }
   }
 </style>
