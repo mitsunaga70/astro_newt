@@ -3,7 +3,7 @@ export interface Props {
   page: any;
   name: String;
 }
-const { page } = Astro.props;
+const { page, name } = Astro.props;
 
 const pageMaxCount = 3; //最大表示数(前後3つ)
 const pageFirst = page.currentPage - pageMaxCount >= 1 ? page.currentPage - pageMaxCount : 1;
@@ -19,7 +19,6 @@ for (let i = pageFirst; i <= pageEnd; i++) {
     pageList.push({ page: i, current: false });
   }
 }
-console.log(pageList);
 ---
 
 <div class="pagination">
@@ -31,9 +30,7 @@ console.log(pageList);
             <li class="pagination__item--current">{pageInfo.page}</li>
           ) : (
             <li class="pagination__item">
-              <a
-                href={pageInfo.page === 1 ? "/articles/pages/" : "/articles/pages/" + pageInfo.page}
-              >
+              <a href={pageInfo.page === 1 ? "/" + name + "/" : "/" + name + "/" + pageInfo.page}>
                 {pageInfo.page}
               </a>
             </li>
@@ -47,10 +44,17 @@ console.log(pageList);
   {
     page.currentPage != 1 ? (
       <>
-        <a class="pagination__btn--first" href={"/articles/pages/"}>
+        <a class="pagination__btn--first" href={"/" + name + "/"}>
           &lt;&lt;
         </a>
-        <a class="pagination__btn--prev" href={"/articles/pages/" + (page.currentPage - 1)}>
+        <a
+          class="pagination__btn--prev"
+          href={
+            page.currentPage - 1 === 1
+              ? "/" + name + "/"
+              : "/" + name + "/" + (page.currentPage - 1)
+          }
+        >
           &lt;
         </a>
       </>
@@ -61,10 +65,10 @@ console.log(pageList);
   {
     page.currentPage != page.lastPage ? (
       <>
-        <a class="pagination__btn--next" href={"/articles/pages/" + (page.currentPage + 1)}>
+        <a class="pagination__btn--next" href={"/" + name + "/" + (page.currentPage + 1)}>
           &gt;
         </a>
-        <a class="pagination__btn--last" href={"/articles/pages/" + page.lastPage}>
+        <a class="pagination__btn--last" href={"/" + name + "/" + page.lastPage}>
           &gt;&gt;
         </a>
       </>
@@ -74,23 +78,37 @@ console.log(pageList);
   }
 </div>
 
-<style>
+<style lang="scss">
   .pagination__btn--last,
   .pagination__btn--first,
   .pagination__btn--next,
-  .pagination__btn--prev,
+  .pagination__btn--prev {
+    @include pCenter(y);
+  }
+  .pagination__btn--last {
+    right: -100px;
+  }
+  .pagination__btn--next {
+    right: -50px;
+  }
+  .pagination__btn--first {
+    left: -100px;
+  }
+  .pagination__btn--prev {
+    left: -50px;
+  }
   .pagination__item a,
   .pagination__item--current {
     box-sizing: border-box;
     display: block;
-    color: #ffa353;
+    color: $text-color;
     text-decoration: none;
     text-align: center;
     background: #fff;
     border-radius: 50%;
     min-width: 2.4em;
     transition: all 0.2s;
-    margin: 0 0.4em 0 0;
+
     padding: 0.7em;
   }
 
@@ -101,26 +119,29 @@ console.log(pageList);
   .pagination__item a:hover,
   .pagination__item--current:hover {
     color: #fff;
-    background: #ffa353;
+    background: $text-color;
   }
 
   .pagination {
     background: #fff;
     width: fit-content;
     display: flex;
+
     justify-content: center;
     align-items: center;
     line-height: 1;
     border-radius: calc(1.6em);
     margin: 0 auto;
     padding: 0.4em 1em;
+    margin-top: 50px;
+    position: relative;
   }
   .pagination__list {
     display: none;
   }
   .pagination__pos {
     order: 2;
-    color: #ffa353;
+    color: $text-color;
     margin: 0 1em;
   }
   .pagination__btn--prev {
@@ -142,15 +163,15 @@ console.log(pageList);
       list-style: none;
       margin: 0;
       padding: 0;
+      gap: 0.4em;
     }
     .pagination__item {
       margin: 0;
     }
     .pagination__item--current {
-      background: #ffa353;
+      background: $text-color;
       color: #fff;
       font-weight: bold;
-      margin: 0 0.4em 0 0;
     }
     .pagination__pos {
       display: none;

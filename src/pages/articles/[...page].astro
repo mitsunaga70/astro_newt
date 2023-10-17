@@ -1,8 +1,12 @@
 ---
-import { newtClient } from "../../../libs/newt";
-import Layout from "../../../layouts/Layout.astro";
-import Paging from "../../../components/Paging.astro";
+import { newtClient } from "../../libs/newt";
+import Layout from "../../layouts/Layout.astro";
+import Paging from "../../components/Paging.astro";
 import { Image } from "astro:assets";
+import Container from "../../components/Container.astro";
+import PageBody from "../../components/PageBody.astro";
+import PageTitle from "../../components/PageTitle.astro";
+import TagList from "../../components/TagList.astro";
 export async function getStaticPaths({ paginate }) {
   const postsData = await newtClient.getContents({
     appUid: "blog",
@@ -13,48 +17,50 @@ export async function getStaticPaths({ paginate }) {
     },
   });
   const postsContents = postsData.items;
-  return paginate(postsContents, { pageSize: 1 });
+  return paginate(postsContents, { pageSize: 6 });
 }
 const { page } = Astro.props;
 ---
 
 <Layout>
-  // 現在のページ
-  <h1>{page.currentPage}ページ</h1>
-   // コンテンツの表示
+  <PageTitle ja="BLOG" />
+  <PageBody>
+    <Container>
+      <TagList />
+      <ul class="list">
+        {
+          page.data.map((article) => {
+            return (
+              <li>
+                <a href={`/articles/${article.slug}`}>
+                  <figure>
+                    <Image
+                      src={article.coverImage.src}
+                      width={338 * 2}
+                      height={225 * 2}
+                      alt={article.title}
+                    />
+                  </figure>
+                  <div class="body">
+                    <ul class="tag_list">
+                      {article.tags &&
+                        article.tags.map((tag) => {
+                          return <li class="tag_item">{tag.name}</li>;
+                        })}
+                    </ul>
+                    <h3>{article.title}</h3>
 
-  <ul class="list">
-    {
-      page.data.map((article) => {
-        return (
-          <li>
-            <a href={`/articles/${article.slug}`}>
-              <figure>
-                <Image
-                  src={article.coverImage.src}
-                  width={338 * 2}
-                  height={225 * 2}
-                  alt={article.title}
-                />
-              </figure>
-              <div class="body">
-                <ul class="tag_list">
-                  {article.tags &&
-                    article.tags.map((tag) => {
-                      return <li class="tag_item">{tag.name}</li>;
-                    })}
-                </ul>
-                <h3>{article.title}</h3>
-
-                <p class="more">詳細を見る</p>
-              </div>
-            </a>
-          </li>
-        );
-      })
-    }
-  </ul>
-  <Paging page={page} name="blog" />
+                    <p class="more">詳細を見る</p>
+                  </div>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <Paging page={page} name="articles" />
+    </Container>
+  </PageBody>
 </Layout>
 
 <style lang="scss">
