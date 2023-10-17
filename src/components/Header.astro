@@ -40,7 +40,9 @@ var data = "data-astro-reload";
   function headerScroll() {
     var hero = document.querySelector(".js-hero");
     var header = document.querySelector(".js-header");
-
+    if (!hero || !header) {
+      return; // ヒーローやヘッダーが見つからない場合は処理を中断
+    }
     window.addEventListener("scroll", function () {
       if (window.pageYOffset >= hero.offsetHeight) {
         header.classList.add("is-scroll");
