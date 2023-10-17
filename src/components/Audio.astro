@@ -6,13 +6,8 @@
       width="22"
       height="14.3"
       viewBox="0 0 22 14.3"
-      ><defs
-        ><style>
-          .soundOn01 {
-            fill: #603f1c;
-          }
-        </style></defs
-      ><g id="arrow-r01"
+    >
+      <g id="arrow-r01"
         ><path
           class="soundOn01"
           d="M0,4.62v5.06H7.32l5.5,4.62V0L7.32,4.62H0ZM17.41,0h-1.1V14.3h1.1V0Zm4.59,0h-1.1V14.3h1.1V0Z"
@@ -80,4 +75,6 @@
     }
   };
   soundControl();
+  document.addEventListener("DOMContentLoaded", soundControl);
+  document.addEventListener("astro:page-load", soundControl);
 </script>

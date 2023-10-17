@@ -27,10 +27,12 @@ var data = "data-astro-reload";
         }
       </ul>
     </nav>
-    <a href="../assets/audio/audio.mp3" class="contact">CONTACT</a>
+    <a href="/contact/" class="contact">CONTACT</a>
   </div>
 
-  <Audio />
+  <div class="audio">
+    <Audio />
+  </div>
 </header>
 <script src="../assets/script/header.ts"></script>
 
@@ -107,5 +109,11 @@ var data = "data-astro-reload";
         color: $text-color;
       }
     }
+  }
+  .audio {
+    position: fixed;
+    right: 200px;
+    top: 38px;
+    z-index: 10;
   }
 </style>
