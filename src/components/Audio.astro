@@ -1,5 +1,5 @@
 <div class="sound">
-  <button class="soundBtn is-stop" id="js-btnPlay"
+  <button class="soundBtn" id="js-btnPlay"
     ><svg
       id="soundOn"
       xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +53,19 @@
 </style>
 <script>
   //オーディオコントロール
+  function loadAudio() {
+    const bgm1 = document.querySelector("#js-bgm01"); // <audio>
+    const btn = document.querySelector("#js-btnPlay"); // <button>
+    if (btn && bgm1) {
+      if (bgm1.paused) {
+        bgm1.pause();
+        btn.classList.add("is-stop");
+      } else {
+        bgm1.play();
+        btn.classList.remove("is-stop");
+      }
+    }
+  }
   var soundControl = function soundControl() {
     const bgm1 = document.querySelector("#js-bgm01"); // <audio>
     const btn = document.querySelector("#js-btnPlay"); // <button>
@@ -63,13 +76,13 @@
         if (!bgm1.paused) {
           bgm1.pause();
           btn.classList.add("is-stop");
-          sessionStorage.setItem("rejectAudioFlag", true);
-          sessionStorage.removeItem("audioFlag");
+          // sessionStorage.setItem("rejectAudioFlag", true);
+          // sessionStorage.removeItem("audioFlag");
         } else {
           bgm1.play();
           btn.classList.remove("is-stop");
-          sessionStorage.setItem("audioFlag", true);
-          sessionStorage.removeItem("rejectAudioFlag");
+          // sessionStorage.setItem("audioFlag", true);
+          // sessionStorage.removeItem("rejectAudioFlag");
         }
       });
 
@@ -78,35 +91,37 @@
        */
       bgm1.addEventListener("ended", () => {
         bgm1.currentTime = 0; // 再生位置を先頭に移動(こいつはなくても大丈夫です)
-        btn.innerHTML = '<i class="fas fa-play"></i>'; // 「再生ボタン」に変更
       });
 
-      //
-      const rejectAudioFlag = sessionStorage.getItem("rejectAudioFlag");
-      const audioFlag = sessionStorage.getItem("audioFlag");
-      const topAccess = sessionStorage.getItem("topAccess");
-      const bodyelement = document.getElementById("body");
+      // //
+      // const rejectAudioFlag = sessionStorage.getItem("rejectAudioFlag");
+      // const audioFlag = sessionStorage.getItem("audioFlag");
+      // const topAccess = sessionStorage.getItem("topAccess");
+      // const bodyelement = document.getElementById("body");
 
-      if (!rejectAudioFlag) {
-        window.addEventListener("load", function () {
-          if (!bgm1.paused) {
-            bgm1.pause();
-            btn.classList.add("is-stop");
-          } else {
-            bgm1.play();
-            btn.classList.remove("is-stop");
-          }
-        });
-      }
-      if (!topAccess && !audioFlag && !rejectAudioFlag) {
-        window.addEventListener("load", function () {
-          bgm1.pause();
-          btn.classList.add("is-stop");
-        });
-      }
+      // if (!rejectAudioFlag) {
+      //   window.addEventListener("load", function () {
+      //     if (!bgm1.paused) {
+      //       bgm1.pause();
+      //       btn.classList.add("is-stop");
+      //     } else {
+      //       bgm1.play();
+      //       btn.classList.remove("is-stop");
+      //     }
+      //   });
+      // }
+      // if (!topAccess && !audioFlag && !rejectAudioFlag) {
+      //   window.addEventListener("load", function () {
+      //     bgm1.pause();
+      //     btn.classList.add("is-stop");
+      //   });
+      // }
     }
   };
+  loadAudio();
   soundControl();
+
+  document.addEventListener("astro:after-swap", loadAudio);
   document.addEventListener("DOMContentLoaded", soundControl);
   document.addEventListener("astro:page-load", soundControl);
 </script>
