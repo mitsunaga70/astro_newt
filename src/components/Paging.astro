@@ -1,0 +1,184 @@
+---
+export interface Props {
+  page: any;
+  name: String;
+}
+const { page } = Astro.props;
+
+const pageMaxCount = 3; //最大表示数(前後3つ)
+const pageFirst = page.currentPage - pageMaxCount >= 1 ? page.currentPage - pageMaxCount : 1;
+const pageEnd =
+  page.currentPage + pageMaxCount <= page.lastPage
+    ? page.currentPage + pageMaxCount
+    : page.lastPage;
+const pageList: any[] = [];
+for (let i = pageFirst; i <= pageEnd; i++) {
+  if (i === page.currentPage) {
+    pageList.push({ page: i, current: true });
+  } else {
+    pageList.push({ page: i, current: false });
+  }
+}
+console.log(pageList);
+---
+
+<div class="pagination">
+  <ul class="pagination__list">
+    {
+      pageList.map((pageInfo) => (
+        <div>
+          {pageInfo.current ? (
+            <li class="pagination__item--current">{pageInfo.page}</li>
+          ) : (
+            <li class="pagination__item">
+              <a
+                href={pageInfo.page === 1 ? "/articles/pages/" : "/articles/pages/" + pageInfo.page}
+              >
+                {pageInfo.page}
+              </a>
+            </li>
+          )}
+        </div>
+      ))
+    }
+  </ul>
+
+  <p class="pagination__pos">Page {page.currentPage}/{page.lastPage}</p>
+  {
+    page.currentPage != 1 ? (
+      <>
+        <a class="pagination__btn--first" href={"/articles/pages/"}>
+          &lt;&lt;
+        </a>
+        <a class="pagination__btn--prev" href={"/articles/pages/" + (page.currentPage - 1)}>
+          &lt;
+        </a>
+      </>
+    ) : (
+      <div />
+    )
+  }
+  {
+    page.currentPage != page.lastPage ? (
+      <>
+        <a class="pagination__btn--next" href={"/articles/pages/" + (page.currentPage + 1)}>
+          &gt;
+        </a>
+        <a class="pagination__btn--last" href={"/articles/pages/" + page.lastPage}>
+          &gt;&gt;
+        </a>
+      </>
+    ) : (
+      <div />
+    )
+  }
+</div>
+
+<style>
+  .pagination__btn--last,
+  .pagination__btn--first,
+  .pagination__btn--next,
+  .pagination__btn--prev,
+  .pagination__item a,
+  .pagination__item--current {
+    box-sizing: border-box;
+    display: block;
+    color: #ffa353;
+    text-decoration: none;
+    text-align: center;
+    background: #fff;
+    border-radius: 50%;
+    min-width: 2.4em;
+    transition: all 0.2s;
+    margin: 0 0.4em 0 0;
+    padding: 0.7em;
+  }
+
+  .pagination__btn--last:hover,
+  .pagination__btn--first:hover,
+  .pagination__btn--next:hover,
+  .pagination__btn--prev:hover,
+  .pagination__item a:hover,
+  .pagination__item--current:hover {
+    color: #fff;
+    background: #ffa353;
+  }
+
+  .pagination {
+    background: #fff;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    border-radius: calc(1.6em);
+    margin: 0 auto;
+    padding: 0.4em 1em;
+  }
+  .pagination__list {
+    display: none;
+  }
+  .pagination__pos {
+    order: 2;
+    color: #ffa353;
+    margin: 0 1em;
+  }
+  .pagination__btn--prev {
+    order: 1;
+  }
+  .pagination__btn--next {
+    order: 3;
+  }
+  .pagination__btn--first {
+    display: none;
+  }
+  .pagination__btn--last {
+    display: none;
+  }
+  @media (min-width: 520px) {
+    .pagination__list {
+      order: 2;
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .pagination__item {
+      margin: 0;
+    }
+    .pagination__item--current {
+      background: #ffa353;
+      color: #fff;
+      font-weight: bold;
+      margin: 0 0.4em 0 0;
+    }
+    .pagination__pos {
+      display: none;
+    }
+  }
+  @media (min-width: 960px) {
+    .pagination .pagination__list {
+      order: 3;
+    }
+    .pagination .pagination__btn--prev {
+      order: 2;
+    }
+    .pagination .pagination__btn--next {
+      order: 4;
+    }
+    .pagination .pagination__btn--first {
+      order: 1;
+      display: block;
+      width: 2.4em;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .pagination .pagination__btn--last {
+      order: 5;
+      display: block;
+      width: 2.4em;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+</style>
