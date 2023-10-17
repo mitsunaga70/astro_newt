@@ -7,7 +7,7 @@ type siteType = {
 export const siteMeta: siteType = {
   siteTitle: "サイトタイトル",
   siteDesc: "ディスクリプションが入ります。",
-  siteUrl: "https://〇〇.jp/",
+  siteUrl: "https://harmonious-praline-57738f.netlify.app/",
 };
 
 export const pageInfo = {

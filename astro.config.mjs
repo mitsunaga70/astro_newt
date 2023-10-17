@@ -27,7 +27,7 @@ export default defineConfig({
     port: 8080,
     open: true
   },
-  site: 'https://〇〇.jp',
+  site: 'https://harmonious-praline-57738f.netlify.app',
   image: {
     domains: ["blog-739442.assets.newt.so"],
   },

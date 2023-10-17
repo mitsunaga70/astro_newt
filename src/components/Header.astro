@@ -1,7 +1,7 @@
 ---
 import { navItems } from "../libs/nav";
 import Button from "./Button.astro";
-
+import Audio from "./Audio.astro";
 var data = "data-astro-reload";
 ---
 
@@ -27,8 +27,10 @@ var data = "data-astro-reload";
         }
       </ul>
     </nav>
-    <a href="/contact/" class="contact">CONTACT</a>
+    <a href="../assets/audio/audio.mp3" class="contact">CONTACT</a>
   </div>
+
+  <Audio />
 </header>
 <script src="../assets/script/header.ts"></script>
 
