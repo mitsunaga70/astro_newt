@@ -16,9 +16,41 @@
     >
   </button>
   <audio id="js-bgm01" preload="" loop="" transition:name="media-player" transition:persist>
-    <source src="/assets/audio/audio.mp3" type="audio/mp3" />
+    <source src="/assets/audio/test.mp3" type="audio/mp3" />
   </audio>
 </div>
+<style lang="scss">
+  .sound {
+    position: relative;
+
+    &Btn {
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 55%;
+        left: -4px;
+        width: 130%;
+        height: 1px;
+        background-color: currentColor;
+        transform: rotate(-38deg);
+        transform-origin: top;
+        transition: 0.4s ease-in-out;
+        opacity: 0;
+      }
+
+      &.is-stop::before {
+        opacity: 1;
+      }
+    }
+
+    svg {
+      .soundOn01 {
+        transition: 0.4s ease-in-out;
+      }
+    }
+  }
+</style>
 <script>
   //オーディオコントロール
   var soundControl = function soundControl() {
