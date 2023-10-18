@@ -3,9 +3,16 @@ import Button from "../../components/Button.astro";
 import Container from "../../components/Container.astro";
 import PageBody from "../../components/PageBody.astro";
 import Layout from "../../layouts/Layout.astro";
+import { pageInfo } from "../../libs/constants";
+const pageKey = "page404";
+const { pageTitle, pageNoindex } = pageInfo[pageKey];
+
+const title = pageTitle;
+const noindex = pageNoindex;
+const className = "page-lower page404";
 ---
 
-<Layout>
+<Layout pageTitle={title} pageNoindex={noindex} pageClass={className}>
   <PageBody>
     <Container>
       <h2>404 Not Found</h2>
