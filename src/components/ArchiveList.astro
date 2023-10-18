@@ -37,6 +37,14 @@ const { items: articles } = await newtClient.getContents<Article>({
                 width={338 * 2}
                 height={225 * 2}
                 alt={article.title}
+                class="u-pc"
+              />
+              <Image
+                src={article.coverImage.src}
+                width={375}
+                height={228}
+                alt={article.title}
+                class="u-sp"
               />
             </figure>
             <div class="body">
@@ -63,6 +71,9 @@ const { items: articles } = await newtClient.getContents<Article>({
     justify-content: space-between;
     flex-wrap: wrap;
     row-gap: 60px;
+    @include bp(sp) {
+      display: block;
+    }
     &::before,
     &::after {
       content: "";
