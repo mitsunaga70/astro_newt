@@ -3,6 +3,7 @@
 import { Image } from "astro:assets";
 import { newtClient } from "../../libs/newt";
 import type { Article } from "../../libs/newt";
+import PictureImage from "../PictureImage.astro";
 
 export interface Props {
   tags?: string;
@@ -40,6 +41,14 @@ const { items: articles } = await newtClient.getContents<Article>({
                       width={1440}
                       height={800}
                       alt={article.title}
+                      class="u-pc"
+                    />
+                    <Image
+                      src={article.coverImage.src}
+                      width={375}
+                      height={800}
+                      alt={article.title}
+                      class="u-sp"
                     />
                   </figure>
                   <div class="body">
