@@ -1,0 +1,48 @@
+---
+import { newtClient } from "../../../../libs/newt";
+import type { Article, Tag } from "../../../../libs/newt";
+import Layout from "../../../../layouts/Layout.astro";
+import PageBody from "../../../../components/PageBody.astro";
+import PageTitle from "../../../../components/PageTitle.astro";
+import ArchivePageList from "../../../../components/ArchivePageList.astro";
+
+export async function getStaticPaths({ paginate }) {
+  const { items: tags } = await newtClient.getContents<Tag>({
+    appUid: "blog",
+    modelUid: "tag",
+    query: {
+      select: ["_id", "slug", "name"],
+    },
+  });
+
+  const { items: postsData } = await newtClient.getContents<Article>({
+    appUid: "blog",
+    modelUid: "article",
+    query: {
+      select: ["_id", "title", "slug", "body", "coverImage", "tags"],
+      order: ["-_priority", "-_sys.customOrder"],
+    },
+  });
+
+  return tags.flatMap((tag) => {
+    const filteredPosts = postsData.filter((post) =>
+      post.tags.some((tagItem) => tagItem.slug === tag.slug)
+    );
+    return paginate(filteredPosts, {
+      params: { tag: tag.slug },
+      props: { tag },
+      pageSize: 6,
+    });
+  });
+}
+const { page, tag } = Astro.props;
+const params = Astro.params;
+console.log(page);
+---
+
+<Layout>
+  <PageTitle ja={tag.name} />
+  <PageBody>
+    <ArchivePageList page={page} tagName={"articles/tag/" + tag.slug} />
+  </PageBody>
+</Layout>
