@@ -1,0 +1,53 @@
+---
+import { newtClient } from "../libs/newt";
+import type { Article } from "../libs/newt";
+import BlogItem from "./BlogItem.astro";
+
+export interface Props {
+  tags?: string;
+  classNames?: string;
+  limit?: number;
+}
+const { tags, limit, classNames } = Astro.props;
+const tagId = tags && tags;
+
+const limitNumber = limit || "100";
+
+const { items: blog } = await newtClient.getContents<Article>({
+  appUid: "blog",
+  modelUid: "article",
+  query: {
+    select: ["_id", "title", "slug", "body", "coverImage", "tags"],
+    order: ["-_priority", "-_sys.customOrder"],
+    tags: tagId,
+    limit: limit,
+  },
+});
+---
+
+<ul class="list">
+  {
+    blog.map((blogItem) => {
+      return <BlogItem blogItem={blogItem} />;
+    })
+  }
+</ul>
+
+<style lang="scss">
+  .list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 60px;
+    @include bp(sp) {
+      display: block;
+    }
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 31.5%;
+      order: 1;
+    }
+  }
+</style>

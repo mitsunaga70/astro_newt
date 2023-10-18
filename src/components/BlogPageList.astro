@@ -1,0 +1,40 @@
+---
+import Container from "./Container.astro";
+import Paging from "./Paging.astro";
+import TagList from "./TagList.astro";
+import BlogItem from "./BlogItem.astro";
+
+export type Props = {
+  page: [];
+  tagName?: string;
+};
+const { page, tagName } = Astro.props;
+---
+
+<Container>
+  <TagList />
+  <ul class="list">
+    {
+      page.data.map((blogItem) => {
+        return <BlogItem blogItem={blogItem} />;
+      })
+    }
+  </ul>
+  {page.lastPage != 1 && <Paging page={page} name={tagName} />}
+</Container>
+
+<style lang="scss">
+  .list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 60px;
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      width: 31.5%;
+      order: 1;
+    }
+  }
+</style>

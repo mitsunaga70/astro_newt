@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import TagList from "../components/TagList.astro";
 import CateList from "../components/CateList.astro";
-import Archive from "../components/ArchiveList.astro";
+import Blog from "../components/BlogList.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import NewsList from "../components/NewsList.astro";
 import Button from "../components/Button.astro";
@@ -26,12 +26,12 @@ import Hero from "../components/top/Hero.astro";
       <section class="u-mb80">
         <SectionTitle ja="BLOG" />
         <TagList />
-        <Archive limit={3} />
+        <Blog limit={3} />
       </section>
       <section class="u-mb80">
         <SectionTitle ja="NEWS" />
         <CateList />
-        <NewsList />
+        <NewsList limit={3} />
       </section>
       <section>
         <SectionTitle ja="EVENT" />

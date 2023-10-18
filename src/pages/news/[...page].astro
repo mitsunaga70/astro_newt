@@ -1,0 +1,27 @@
+---
+import { newtClient } from "../../libs/newt";
+import Layout from "../../layouts/Layout.astro";
+import PageBody from "../../components/PageBody.astro";
+import PageTitle from "../../components/PageTitle.astro";
+import NewsPageList from "../../components/NewsPageList.astro";
+export async function getStaticPaths({ paginate }) {
+  const postsData = await newtClient.getContents({
+    appUid: "news",
+    modelUid: "article",
+    query: {
+      select: ["_id", "_sys", "title", "slug", "body", "categories"],
+      order: ["-_priority", "-_sys.customOrder"],
+    },
+  });
+  const postsContents = postsData.items;
+  return paginate(postsContents, { pageSize: 10 });
+}
+const { page } = Astro.props;
+---
+
+<Layout>
+  <PageTitle ja="NEWS" />
+  <PageBody>
+    <NewsPageList page={page} cateName="news" />
+  </PageBody>
+</Layout>

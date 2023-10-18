@@ -1,0 +1,23 @@
+---
+import CateList from "./CateList.astro";
+import Container from "./Container.astro";
+import NewsItem from "./NewsItem.astro";
+import Paging from "./Paging.astro";
+export type Props = {
+  page: [];
+  cateName?: string;
+};
+const { page, cateName } = Astro.props;
+---
+
+<Container>
+  <CateList />
+  <ul class="list">
+    {
+      page.data.map((newsItem) => {
+        return <NewsItem newsItem={newsItem} />;
+      })
+    }
+  </ul>
+  {page.lastPage != 1 && <Paging page={page} name={cateName} />}
+</Container>

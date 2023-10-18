@@ -14,13 +14,13 @@ const { items: tags } = await newtClient.getContents<Tag>({
   <div class="tag u-mb16">
     <ul class="list">
       <li class="item">
-        <a href="/articles/" class="link"> すべて</a>
+        <a href="/blog/" class="link"> すべて</a>
       </li>
       {
         tags.map((tag) => {
           return (
             <li class="item">
-              <a href={`/articles/tag/${tag.slug}`} class="link">
+              <a href={`/blog/tag/${tag.slug}`} class="link">
                 {tag.name}
               </a>
             </li>

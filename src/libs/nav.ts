@@ -6,7 +6,7 @@ export const navItems = [
   },
   {
     text: "BLOG",
-    link: "/articles/",
+    link: "/blog/",
     load: false,
   },
   {

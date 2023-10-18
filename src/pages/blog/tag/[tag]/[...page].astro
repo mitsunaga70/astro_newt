@@ -4,7 +4,7 @@ import type { Article, Tag } from "../../../../libs/newt";
 import Layout from "../../../../layouts/Layout.astro";
 import PageBody from "../../../../components/PageBody.astro";
 import PageTitle from "../../../../components/PageTitle.astro";
-import ArchivePageList from "../../../../components/ArchivePageList.astro";
+import BlogPageList from "../../../../components/BlogPageList.astro";
 
 export async function getStaticPaths({ paginate }) {
   const { items: tags } = await newtClient.getContents<Tag>({
@@ -42,6 +42,6 @@ const params = Astro.params;
 <Layout>
   <PageTitle ja={tag.name} />
   <PageBody>
-    <ArchivePageList page={page} tagName={"articles/tag/" + tag.slug} />
+    <BlogPageList page={page} tagName={"blog/tag/" + tag.slug} />
   </PageBody>
 </Layout>

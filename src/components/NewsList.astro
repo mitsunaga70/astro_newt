@@ -1,14 +1,14 @@
 ---
-import { Image } from "astro:assets";
 import { newtClient } from "../libs/newt";
 import type { Article } from "../libs/newt";
-import FormatDate from "./formatDate.astro";
+import NewsItem from "./NewsItem.astro";
 
 export interface Props {
   categories?: string;
   classNames?: string;
+  limit?: number;
 }
-const { categories, classNames } = Astro.props;
+const { categories, limit, classNames } = Astro.props;
 const cateId = categories && categories;
 
 const { items: news } = await newtClient.getContents<Article>({
@@ -18,6 +18,7 @@ const { items: news } = await newtClient.getContents<Article>({
     select: ["_id", "_sys", "title", "slug", "body", "categories"],
     order: ["-_priority", "-_sys.customOrder"],
     categories: cateId,
+    limit: limit,
   },
 });
 ---
@@ -25,66 +26,7 @@ const { items: news } = await newtClient.getContents<Article>({
 <ul class="list">
   {
     news.map((newsItem) => {
-      return (
-        <li>
-          <a href={`/news/${newsItem.slug}`}>
-            <FormatDate date={newsItem._sys.raw.createdAt} />
-            <ul class="tag_list">
-              {newsItem.categories &&
-                newsItem.categories.map((category) => {
-                  return <li class="category_item">{category.name}</li>;
-                })}
-            </ul>
-            <h3>{newsItem.title}</h3>
-          </a>
-        </li>
-      );
+      return <NewsItem newsItem={newsItem} />;
     })
   }
 </ul>
-
-<style lang="scss">
-  .list {
-    > li {
-      border-bottom: 1px solid;
-      &:first-of-type {
-        a {
-          padding-top: 0;
-        }
-      }
-    }
-    a {
-      display: flex;
-      align-items: center;
-      padding: 1em 0;
-      gap: 30px;
-      @include bp(pc) {
-        transition: 0.2s ease-out;
-        &:hover {
-          color: $red;
-        }
-      }
-    }
-
-    h3 {
-      font-size: 2rem;
-      line-height: 1.5;
-    }
-    .category_list {
-      display: flex;
-      flex-wrap: wrap;
-      white-space: nowrap;
-      gap: 10px;
-      margin-bottom: 0.8rem;
-    }
-    .category_item {
-      border: 1px solid;
-      border-radius: 5px;
-      padding: 0.3em 0.5em 0.5em;
-      line-height: 1;
-      font-size: 1.3rem;
-      width: fit-content;
-      flex: 0;
-    }
-  }
-</style>

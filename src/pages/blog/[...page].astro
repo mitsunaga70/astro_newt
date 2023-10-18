@@ -7,7 +7,7 @@ import Container from "../../components/Container.astro";
 import PageBody from "../../components/PageBody.astro";
 import PageTitle from "../../components/PageTitle.astro";
 import TagList from "../../components/TagList.astro";
-import ArchivePageList from "../../components/ArchivePageList.astro";
+import BlogPageList from "../../components/BlogPageList.astro";
 export async function getStaticPaths({ paginate }) {
   const postsData = await newtClient.getContents({
     appUid: "blog",
@@ -26,6 +26,6 @@ const { page } = Astro.props;
 <Layout>
   <PageTitle ja="BLOG" />
   <PageBody>
-    <ArchivePageList page={page} tagName="articles" />
+    <BlogPageList page={page} tagName="blog" />
   </PageBody>
 </Layout>
