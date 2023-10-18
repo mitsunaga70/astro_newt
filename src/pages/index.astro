@@ -27,16 +27,21 @@ import Hero from "../components/top/Hero.astro";
         <SectionTitle ja="BLOG" />
         <TagList />
         <Blog limit={3} />
+        <div class="buttonWrap"><Button link="blog" text="一覧を見る" /></div>
       </section>
       <section class="u-mb80">
         <SectionTitle ja="NEWS" />
         <CateList />
         <NewsList limit={3} />
+        <div class="buttonWrap"><Button link="news" text="一覧を見る" /></div>
       </section>
       <section>
         <SectionTitle ja="EVENT" />
         <EventList limit={3} />
+        <div class="buttonWrap"><Button link="events" text="一覧を見る" /></div>
       </section>
     </Container>
   </PageBody>
 </Layout>
+
+<style lang="scss"></style>

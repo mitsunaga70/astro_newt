@@ -29,7 +29,7 @@ const { newsItem } = Astro.props;
       <div class="blog-single">
         <h1>{newsItem.title}</h1>
         <article set:html={newsItem.body} />
-        <Button text="トップへ" link="/" />
+        <Button text="一覧に戻る" link="/news/" />
       </div>
     </Container>
   </PageBody>
