@@ -34,7 +34,7 @@ const { items: articles } = await newtClient.getContents<Article>({
           if (article.top) {
             return (
               <li class="swiper-slide">
-                <a href={`/articles/${article.slug}`} class="link">
+                <a href={`/blog/${article.slug}`} class="link">
                   <figure class="img">
                     <Image
                       src={article.coverImage.src}
