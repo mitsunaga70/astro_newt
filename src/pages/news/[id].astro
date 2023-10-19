@@ -11,7 +11,7 @@ export const getStaticPaths = async () => {
     appUid: "news",
     modelUid: "article",
     query: {
-      select: ["_id", "title", "slug", "body"],
+      select: ["_id", "title", "_sys", "slug", "body"],
     },
   });
   return news.map((newsItem) => ({
@@ -21,6 +21,28 @@ export const getStaticPaths = async () => {
 };
 
 const { newsItem } = Astro.props;
+const newsPrev = await newtClient.getFirstContent<Article>({
+  appUid: "news",
+  modelUid: "article",
+  query: {
+    select: ["_id", "title"],
+    order: ["-_sys.customOrder"],
+    "_sys.customOrder": {
+      lt: newsItem._sys.customOrder,
+    },
+  },
+});
+const newsNext = await newtClient.getFirstContent<Article>({
+  appUid: "news",
+  modelUid: "article",
+  query: {
+    select: ["_id", "title"],
+    order: ["_sys.customOrder"],
+    "_sys.customOrder": {
+      gt: newsItem._sys.customOrder,
+    },
+  },
+});
 ---
 
 <Layout>
@@ -29,7 +51,25 @@ const { newsItem } = Astro.props;
       <div class="blog-single">
         <h1>{newsItem.title}</h1>
         <article set:html={newsItem.body} />
-        <Button text="一覧に戻る" link="/news/" />
+
+        <div class="article-footer">
+          {
+            newsPrev && (
+              <a href={"/news/" + newsPrev._id} class="prev">
+                前の記事へ
+              </a>
+            )
+          }
+          <Button text="一覧に戻る" link="/news/" />
+
+          {
+            newsNext && (
+              <a href={"/news/" + newsNext._id} class="next">
+                次の記事へ
+              </a>
+            )
+          }
+        </div>
       </div>
     </Container>
   </PageBody>
@@ -53,6 +93,46 @@ const { newsItem } = Astro.props;
     :global(p) {
       &:not(:last-child) {
         margin-bottom: 1em;
+      }
+    }
+  }
+  .article-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+    position: relative;
+    :global(.button) {
+      margin-top: 0;
+    }
+
+    .prev,
+    .next {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      @include pCenter(y);
+      @include bp(pc) {
+        transition: 0.3s;
+        &:hover {
+          color: $red;
+        }
+      }
+      &::before,
+      &::after {
+        display: block;
+        margin-top: -5px;
+      }
+    }
+    .next {
+      right: 0;
+      &::after {
+        content: ">";
+      }
+    }
+    .prev {
+      left: 0;
+      &::before {
+        content: "<";
       }
     }
   }
