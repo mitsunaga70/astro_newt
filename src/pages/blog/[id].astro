@@ -15,7 +15,7 @@ export const getStaticPaths = async () => {
     },
   });
   return articles.map((article) => ({
-    params: { slug: article.slug },
+    params: { id: article._id },
     props: { article },
   }));
 };

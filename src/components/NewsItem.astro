@@ -8,7 +8,7 @@ const { newsItem } = Astro.props;
 ---
 
 <li>
-  <a href={`/news/${newsItem.slug}`}>
+  <a href={`/news/${newsItem._id}`}>
     <FormatDate date={newsItem._sys.raw.createdAt} />
     <ul class="tag_list">
       {

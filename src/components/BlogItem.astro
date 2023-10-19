@@ -7,7 +7,7 @@ const { blogItem } = Astro.props;
 ---
 
 <li>
-  <a href={`/blog/${blogItem.slug}`}>
+  <a href={`/blog/${blogItem._id}`}>
     <figure>
       <Image
         src={blogItem.coverImage.src}

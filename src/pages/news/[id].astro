@@ -15,7 +15,7 @@ export const getStaticPaths = async () => {
     },
   });
   return news.map((newsItem) => ({
-    params: { slug: newsItem.slug },
+    params: { id: newsItem._id },
     props: { newsItem },
   }));
 };
