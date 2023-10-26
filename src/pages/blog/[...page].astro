@@ -18,7 +18,7 @@ export async function getStaticPaths({ paginate }) {
     },
   });
   const postsContents = postsData.items;
-  return paginate(postsContents, { pageSize: 6 });
+  return paginate(postsContents, { pageSize: 9 });
 }
 const { page } = Astro.props;
 ---

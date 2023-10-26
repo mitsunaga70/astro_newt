@@ -51,7 +51,7 @@ const blogNext = await newtClient.getFirstContent<Article>({
     <Container value="small">
       <div class="blog-single">
         <h1>{article.title}</h1>
-        <figure transition:name={article.slug} class="cover">
+        <figure class="cover">
           <Image
             src={article.coverImage.src}
             width={780}
