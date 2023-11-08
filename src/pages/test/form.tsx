@@ -2,7 +2,7 @@ import { useState } from 'preact/hooks';
 
 const FormWithConfirmation = () => {
 
-  const formURL = 'https://blog-739442.form.newt.so/v1/gnyT5xvLQf';
+  const formURL = 'https://blog-739442.form.newt.so/v1/YgfH5NRhF';
   // State を定義
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // メールアドレス用のステートを追加
