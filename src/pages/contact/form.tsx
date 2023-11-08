@@ -136,7 +136,7 @@ const FormWithConfirmation = () => {
               <p class="form-item-title">Message</p>
               <p class="form-item-body">{message}</p>
             </li>
-            <li>{recaptchaToken}</li>
+
 
           </ul>
 
