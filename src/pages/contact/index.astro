@@ -16,18 +16,5 @@ import FormWithConfirmation from "./form";
     </Container>
   </PageBody>
 </Layout>
-<script
-  is:inline
-  src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
-></script>
 
-<script>
-  grecaptcha.ready(function () {
-    grecaptcha
-      .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
-      .then(function (token) {
-        document.getElementById("recaptchaToken").value = token;
-      });
-  });
-</script>
 <style lang="scss"></style>

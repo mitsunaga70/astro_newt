@@ -47,12 +47,20 @@ const FormWithConfirmation = () => {
     form.appendChild(messageField);
 
 
-
     const recaptchaField = document.createElement('input');
     recaptchaField.type = 'hidden';
     recaptchaField.name = 'googleReCaptchaToken';
     recaptchaField.id = 'recaptchaToken';
     form.appendChild(recaptchaField);
+
+    grecaptcha.ready(function () {
+      grecaptcha
+        .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
+        .then(function (token) {
+          document.getElementById("recaptchaToken").value = token;
+        });
+    });
+
 
 
     // フォームをドキュメントに追加して送信
@@ -63,6 +71,7 @@ const FormWithConfirmation = () => {
   const handleBack = () => {
     setShowConfirmation(false); // 入力フォームに戻る
   };
+
 
 
   return (
@@ -95,7 +104,7 @@ const FormWithConfirmation = () => {
               <div className="form-item-body"><textarea id="message" value={message} required name="message" onChange={(e) => setMessage(e.target.value)}></textarea></div>
             </li>
           </ul>
-          <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" />
+
           <button type="submit">確認画面へ</button>
         </form>
 
