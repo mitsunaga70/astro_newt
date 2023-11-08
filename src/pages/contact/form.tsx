@@ -101,30 +101,28 @@ const FormWithConfirmation = () => {
 
       ) : (
         // 確認画面
-        <div class="c-form">
-          <form>
+        <div class="c-form --confirm">
 
-            <ul>
-              <li>
-                <p class="form-item-title">Name</p>
-                <p class="form-item-body">{name}</p>
-              </li>
-              <li>
-                <p class="form-item-title">Email</p>
-                <p class="form-item-body">{email}</p>
-              </li>
-              <li>
-                <p class="form-item-title">Message</p>
-                <p class="form-item-body">{message}</p>
-              </li>
-            </ul>
 
-            <div className="button-wrap">
-              <button onClick={handleBack}>戻る</button> {/* 戻るボタンを追加 */}
-              <button onClick={handleConfirm}>送信</button>
-            </div>
+          <ul>
+            <li>
+              <p class="form-item-title">Name</p>
+              <p class="form-item-body">{name}</p>
+            </li>
+            <li>
+              <p class="form-item-title">Email</p>
+              <p class="form-item-body">{email}</p>
+            </li>
+            <li>
+              <p class="form-item-title">Message</p>
+              <p class="form-item-body">{message}</p>
+            </li>
+          </ul>
 
-          </form>
+          <div className="button-wrap">
+            <button onClick={handleBack}>戻る</button> {/* 戻るボタンを追加 */}
+            <button onClick={handleConfirm}>送信</button>
+          </div>
 
         </div>
       )}
