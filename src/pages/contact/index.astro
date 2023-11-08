@@ -23,6 +23,7 @@ import FormWithConfirmation from "./form";
       grecaptcha
         .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
         .then(function (token) {
+          sessionStorage.setItem("recaptchaToken", token);
           document.getElementById("recaptchaToken").value = token;
         });
     });

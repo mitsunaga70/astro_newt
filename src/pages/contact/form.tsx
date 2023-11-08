@@ -13,13 +13,15 @@ const FormWithConfirmation = () => {
 
 
 
-
   // フォームの送信をハンドル
   const handleSubmit = (event) => {
     event.preventDefault(); // ページ遷移を防ぐ
 
-    const tokenValue = document.getElementById('recaptchaToken').value;
+    const tokenValue = sessionStorage.getItem('recaptchaToken');
     setRecaptchaToken(tokenValue);
+
+    // const tokenValue = document.getElementById('recaptchaToken').value;
+    // setRecaptchaToken(tokenValue);
 
 
     setShowConfirmation(true); // 確認画面を表示
@@ -58,6 +60,7 @@ const FormWithConfirmation = () => {
     messageField.value = message;
     form.appendChild(messageField);
 
+
     const recaptchaField = document.createElement('input');
     recaptchaField.type = 'hidden';
     recaptchaField.name = 'googleReCaptchaToken';
@@ -74,6 +77,7 @@ const FormWithConfirmation = () => {
   };
   // 確認画面から編集画面に戻るハンドル
   const handleBack = () => {
+
     setShowConfirmation(false); // 入力フォームに戻る
   };
 
@@ -132,7 +136,7 @@ const FormWithConfirmation = () => {
               <p class="form-item-title">Message</p>
               <p class="form-item-body">{message}</p>
             </li>
-
+            <li>{recaptchaToken}</li>
 
           </ul>
 
