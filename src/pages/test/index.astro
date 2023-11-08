@@ -7,5 +7,25 @@ import FormWithConfirmation from "./form";
 <Layout>
   <PageBody>
     <FormWithConfirmation client:load />
+
+    <form method="post" action="https://blog-739442.form.newt.so/v1/a3CPAUnoP">
+      <input type="text" name="Full name" />
+      <button type="submit">Submit</button>
+    </form>
   </PageBody>
 </Layout>
+
+<script
+  is:inline
+  src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
+></script>
+
+<script>
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
+      .then(function (token) {
+        document.getElementById("recaptchaToken").value = token;
+      });
+  });
+</script>
