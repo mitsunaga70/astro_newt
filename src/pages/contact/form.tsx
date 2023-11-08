@@ -7,12 +7,24 @@ const FormWithConfirmation = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // メールアドレス用のステートを追加
   const [message, setMessage] = useState('');
+  const [recaptchaToken, setRecaptchaToken] = useState('');
+
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+
+
 
   // フォームの送信をハンドル
   const handleSubmit = (event) => {
     event.preventDefault(); // ページ遷移を防ぐ
+
+    const tokenValue = document.getElementById('recaptchaToken').value;
+    setRecaptchaToken(tokenValue);
+
+
     setShowConfirmation(true); // 確認画面を表示
+
+
   };
 
   // 確認画面からフォーム送信をハンドル
@@ -46,20 +58,13 @@ const FormWithConfirmation = () => {
     messageField.value = message;
     form.appendChild(messageField);
 
-
     const recaptchaField = document.createElement('input');
     recaptchaField.type = 'hidden';
     recaptchaField.name = 'googleReCaptchaToken';
     recaptchaField.id = 'recaptchaToken';
+    recaptchaField.value = recaptchaToken;
     form.appendChild(recaptchaField);
 
-    grecaptcha.ready(function () {
-      grecaptcha
-        .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
-        .then(function (token) {
-          document.getElementById("recaptchaToken").value = token;
-        });
-    });
 
 
 
@@ -71,6 +76,7 @@ const FormWithConfirmation = () => {
   const handleBack = () => {
     setShowConfirmation(false); // 入力フォームに戻る
   };
+
 
 
 
@@ -104,7 +110,7 @@ const FormWithConfirmation = () => {
               <div className="form-item-body"><textarea id="message" value={message} required name="message" onChange={(e) => setMessage(e.target.value)}></textarea></div>
             </li>
           </ul>
-
+          <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" />
           <button type="submit">確認画面へ</button>
         </form>
 
@@ -126,6 +132,8 @@ const FormWithConfirmation = () => {
               <p class="form-item-title">Message</p>
               <p class="form-item-body">{message}</p>
             </li>
+
+
           </ul>
 
           <div className="button-wrap">

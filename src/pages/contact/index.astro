@@ -6,14 +6,7 @@ import Layout from "../../layouts/Layout.astro";
 import FormWithConfirmation from "./form";
 ---
 
-<head>
-  <script
-    is:inline
-    src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
-  ></script>
-</head>
-
-<Layout>
+<Layout pageRecaptcha={true}>
   <div class="u-tac">
     <PageTitle ja="CONTACT" />
   </div>
@@ -24,4 +17,17 @@ import FormWithConfirmation from "./form";
   </PageBody>
 </Layout>
 
+<script>
+  function recaptchaToken() {
+    grecaptcha.ready(function () {
+      grecaptcha
+        .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
+        .then(function (token) {
+          document.getElementById("recaptchaToken").value = token;
+        });
+    });
+  }
+  recaptchaToken();
+  document.addEventListener("astro:page-load", recaptchaToken);
+</script>
 <style lang="scss"></style>

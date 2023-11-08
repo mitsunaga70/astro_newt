@@ -9,9 +9,10 @@ export interface Props {
   pageDesc?: string;
   pageNoindex?: boolean;
   pageClass?: string;
+  pageRecaptcha?: boolean;
 }
 
-const { pageTitle, pageDesc, pageNoindex, pageClass = "" } = Astro.props;
+const { pageTitle, pageDesc, pageNoindex, pageClass = "", pageRecaptcha = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,6 +20,14 @@ const { pageTitle, pageDesc, pageNoindex, pageClass = "" } = Astro.props;
   <head>
     <Meta pageTitle={pageTitle} pageDesc={pageDesc} pageNoindex={pageNoindex} />
     <ViewTransitions />
+    {
+      pageRecaptcha && (
+        <script
+          is:inline
+          src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
+        />
+      )
+    }
   </head>
   <body class={pageClass}>
     <Loading />
