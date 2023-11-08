@@ -25,3 +25,114 @@
     }
   }
 }
+
+.c-form {
+  form {
+    margin-left: auto;
+    margin-right: auto;
+
+    ul {
+    }
+    li {
+      display: flex;
+      margin-bottom: 1em;
+    }
+    .form-item-title {
+      width: 100%;
+      max-width: 120px;
+      letter-spacing: 0.05em;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    @media screen and (max-width: 480px) {
+      .form-item-title {
+        max-width: inherit;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+      }
+    }
+
+    .form-item-body {
+      width: 100%;
+    }
+    input {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+
+      padding: 0.5em 1em;
+
+      flex: 1;
+      width: 100%;
+      background: #eaedf2;
+      font-size: 18px;
+    }
+    @media screen and (max-width: 480px) {
+      input {
+        margin-left: 0;
+        margin-top: 18px;
+        height: 40px;
+        flex: inherit;
+        font-size: 15px;
+      }
+    }
+    textarea {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+
+      padding-left: 1em;
+      padding-right: 1em;
+      height: 216px;
+      flex: 1;
+      width: 100%;
+      background: #eaedf2;
+      font-size: 18px;
+    }
+    @media screen and (max-width: 480px) {
+      textarea {
+        margin-top: 18px;
+        margin-left: 0;
+        height: 200px;
+        flex: inherit;
+        font-size: 15px;
+      }
+    }
+    button {
+      background-color: $text-color;
+      width: fit-content;
+      margin-inline: auto;
+      margin-top: 40px;
+      display: block;
+      color: white;
+      padding: 1em 3em;
+      border-radius: 40px;
+      font-weight: bold;
+    }
+    @media screen and (max-width: 480px) {
+      button {
+        margin-top: 24px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        width: 160px;
+        font-size: 16px;
+      }
+    }
+  }
+  @media screen and (max-width: 480px) {
+    form {
+      margin-top: 40px;
+    }
+  }
+
+  .button-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+    button {
+      margin: 0;
+    }
+  }
+  &.--confirm {
+  }
+}
