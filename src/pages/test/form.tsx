@@ -1,6 +1,8 @@
 import { useState } from 'preact/hooks';
 
 const FormWithConfirmation = () => {
+
+  const formURL = 'https://blog-739442.form.newt.so/v1/gnyT5xvLQf';
   // State を定義
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // メールアドレス用のステートを追加
@@ -14,10 +16,12 @@ const FormWithConfirmation = () => {
   };
 
   // 確認画面からフォーム送信をハンドル
+
   const handleConfirm = () => {
+
     // ここでフォームのデータを送信する処理を実装
     const form = document.createElement('form');
-    form.action = 'https://blog-739442.form.newt.so/v1/a3CPAUnoP';
+    form.action = formURL;
     form.method = 'post';
 
     // 名前とメッセージをフォームに追加
@@ -44,11 +48,11 @@ const FormWithConfirmation = () => {
 
 
 
-    const recaptchaField = document.createElement('input');
-    recaptchaField.type = 'hidden';
-    recaptchaField.name = 'googleReCaptchaToken';
-    recaptchaField.id = 'recaptchaToken';
-    form.appendChild(recaptchaField);
+    // const recaptchaField = document.createElement('input');
+    // recaptchaField.type = 'hidden';
+    // recaptchaField.name = 'googleReCaptchaToken';
+    // recaptchaField.id = 'recaptchaToken';
+    // form.appendChild(recaptchaField);
 
 
     // フォームをドキュメントに追加して送信
@@ -59,6 +63,8 @@ const FormWithConfirmation = () => {
   const handleBack = () => {
     setShowConfirmation(false); // 入力フォームに戻る
   };
+
+
   return (
     <div>
       {!showConfirmation ? (
@@ -69,7 +75,7 @@ const FormWithConfirmation = () => {
           <ul>
             <li>
               <label for="name">Name</label>
-              <input id="name" required name="name" onChange={(e) => setName(e.target.value)} />
+              <input id="name" required name="name" value={name} onChange={(e) => setName(e.target.value)} />
             </li>
             <li>
               <label for="email">Email</label>
@@ -77,16 +83,17 @@ const FormWithConfirmation = () => {
                 id="email"
                 type="email"
                 required
+                value={email}
                 name="email"
                 onChange={(e) => setEmail(e.target.value)} // メールアドレスの変更をハンドル
               />
             </li>
             <li>
               <label for="message">Message</label>
-              <textarea id="message" required name="message" onChange={(e) => setMessage(e.target.value)}></textarea>
+              <textarea id="message" value={message} required name="message" onChange={(e) => setMessage(e.target.value)}></textarea>
             </li>
           </ul>
-          <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" />
+          {/* <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" /> */}
           <button type="submit">確認画面へ</button>
         </form>
 
