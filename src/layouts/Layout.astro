@@ -19,10 +19,6 @@ const { pageTitle, pageDesc, pageNoindex, pageClass = "" } = Astro.props;
   <head>
     <Meta pageTitle={pageTitle} pageDesc={pageDesc} pageNoindex={pageNoindex} />
     <ViewTransitions />
-    <script
-      is:inline
-      src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
-    ></script>
   </head>
   <body class={pageClass}>
     <Loading />
