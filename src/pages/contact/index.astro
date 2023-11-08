@@ -6,10 +6,13 @@ import Layout from "../../layouts/Layout.astro";
 import FormWithConfirmation from "./form";
 ---
 
-<script
-  is:inline
-  src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
-></script>
+<head>
+  <script
+    is:inline
+    src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
+  ></script>
+</head>
+
 <Layout>
   <div class="u-tac">
     <PageTitle ja="CONTACT" />
