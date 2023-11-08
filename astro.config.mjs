@@ -9,7 +9,7 @@ import preact from "@astrojs/preact";
 export default defineConfig({
   integrations: [sitemap({
     lastmod: new Date()
-  }), react(), preact()],
+  }), preact()],
   vite: {
     css: {
       postcss: {

@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageBody from "../../components/PageBody.astro";
+import FormWithConfirmation from "./form";
+---
+
+<Layout>
+  <PageBody>
+    <FormWithConfirmation client:load />
+  </PageBody>
+</Layout>
