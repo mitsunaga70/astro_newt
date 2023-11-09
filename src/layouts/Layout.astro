@@ -22,10 +22,26 @@ const { pageTitle, pageDesc, pageNoindex, pageClass = "", pageRecaptcha = false 
     <ViewTransitions />
     {
       pageRecaptcha && (
+     
         <script
           is:inline
           src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
         />
+        <script>
+  function recaptchaToken() {
+    grecaptcha.ready(function () {
+      grecaptcha
+        .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
+        .then(function (token) {
+          sessionStorage.setItem("recaptchaToken", token);
+          document.getElementById("recaptchaToken").value = token;
+        });
+    });
+  }
+  recaptchaToken();
+  document.addEventListener("astro:page-load", recaptchaToken);
+</script>
+        
       )
     }
   </head>

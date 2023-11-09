@@ -1,9 +1,11 @@
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
+
 
 const FormWithConfirmation = () => {
 
-  const formURL = 'https://blog-739442.form.newt.so/v1/a3CPAUnoP';
+  const formURL = 'https://blog-739442.form.newt.so/v1/gnyT5xvLQ';
   // State を定義
+  const [events, setEvents] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // メールアドレス用のステートを追加
   const [message, setMessage] = useState('');
@@ -16,6 +18,9 @@ const FormWithConfirmation = () => {
   // フォームの送信をハンドル
   const handleSubmit = (event) => {
     event.preventDefault(); // ページ遷移を防ぐ
+
+    const eventsParams = sessionStorage.getItem('eventsParams');
+    setEvents(eventsParams);
 
     const tokenValue = sessionStorage.getItem('recaptchaToken');
     setRecaptchaToken(tokenValue);
@@ -38,7 +43,13 @@ const FormWithConfirmation = () => {
     form.action = formURL;
     form.method = 'post';
 
-    // 名前とメッセージをフォームに追加
+    const eventsField = document.createElement('input');
+    eventsField.type = 'hidden';
+    eventsField.name = 'events';
+    eventsField.id = 'events';
+    eventsField.value = events;
+    form.appendChild(eventsField);
+
     const nameField = document.createElement('input');
     nameField.type = 'hidden';
     nameField.name = 'name';
@@ -92,6 +103,14 @@ const FormWithConfirmation = () => {
         <form onSubmit={handleSubmit}>
 
           <ul>
+            <li className="js-contactEventItem">
+              <label className="form-item-title" for="input-events">Event</label>
+              <div className="form-item-body">
+                <input id="input-events" name="events" value={events} hidden />
+                <p id="input-eventsText" className="u-mt8">{events}</p>
+              </div>
+
+            </li>
             <li>
               <label className="form-item-title" for="name">Name</label>
               <div className="form-item-body"><input id="name" required name="name" value={name} onChange={(e) => setName(e.target.value)} /></div>
@@ -124,6 +143,10 @@ const FormWithConfirmation = () => {
 
 
           <ul>
+            <li>
+              <p className="form-item-title">Name</p>
+              <p className="form-item-body">{events}</p>
+            </li>
             <li>
               <p className="form-item-title">Name</p>
               <p className="form-item-body">{name}</p>
