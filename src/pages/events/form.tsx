@@ -6,6 +6,7 @@ const FormWithConfirmation = () => {
   const formURL = 'https://blog-739442.form.newt.so/v1/gnyT5xvLQ';
   // State を定義
   const [events, setEvents] = useState('');
+  const [eventsText, setEventsText] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // メールアドレス用のステートを追加
   const [message, setMessage] = useState('');
@@ -21,6 +22,11 @@ const FormWithConfirmation = () => {
 
     const eventsParams = sessionStorage.getItem('eventsParams');
     setEvents(eventsParams);
+
+
+
+    const formattedText = eventsParams.replace(/,/g, "<br>");
+    setEventsText(formattedText);
 
     const tokenValue = sessionStorage.getItem('recaptchaToken');
     setRecaptchaToken(tokenValue);
@@ -107,7 +113,8 @@ const FormWithConfirmation = () => {
               <label className="form-item-title" for="input-events">Event</label>
               <div className="form-item-body">
                 <input id="input-events" name="events" value={events} hidden />
-                <p id="input-eventsText" className="u-mt8">{events}</p>
+                <p id="input-eventsText" className="u-mt8" dangerouslySetInnerHTML={{ __html: eventsText }}></p>
+
               </div>
 
             </li>
@@ -145,7 +152,7 @@ const FormWithConfirmation = () => {
           <ul>
             <li>
               <p className="form-item-title">Name</p>
-              <p className="form-item-body">{events}</p>
+              <p className="form-item-body" dangerouslySetInnerHTML={{ __html: eventsText }}></p>
             </li>
             <li>
               <p className="form-item-title">Name</p>

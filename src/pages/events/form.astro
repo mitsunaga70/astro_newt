@@ -27,11 +27,11 @@ import FormWithConfirmation from "./form";
 
     if (eventsParam) {
       const decryptedData = Base64.decode(eventsParam);
-      eventInput.value = decryptedData;
-      eventInputText.textContent = decryptedData;
+      // eventInput.value = decryptedData;
+      // eventInputText.textContent = decryptedData;
       const eventsText = eventInputText.textContent;
-      sessionStorage.setItem("eventsParams", eventsText);
-      const formattedText = eventsText.replace(/,/g, "<br>");
+      sessionStorage.setItem("eventsParams", decryptedData);
+      const formattedText = decryptedData.replace(/,/g, "<br>");
       eventInputText.innerHTML = formattedText;
     }
   }
